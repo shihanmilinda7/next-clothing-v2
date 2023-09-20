@@ -14,8 +14,10 @@ import { GiCancel } from "react-icons/gi";
 import { inputFieldValidation } from "@/app/utils/utils";
 import { MdOutlineEditNote } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import NextTextInputField from "../../nextui-input-fields/next-text-input-fields";
+import NextAreaTextInputField from "../../nextui-input-fields/next-textarea-input-fields";
 
-const NewFabric = ({
+const NewBankDetail = ({
   type,
   setReloadTable,
   data,
@@ -44,8 +46,15 @@ const NewFabric = ({
 
   const { data: session, status } = useSession();
 
-  const [fabricid, setFabricid] = useState(data?.fabricid ?? "");
-  const [fabricname, setFabricname] = useState(data?.fabricname ?? "");
+  const [bankaccountid, setBankaccountid] = useState(data?.bankaccountid ?? "");
+  const [bankname, setBankname] = useState(data?.bankname ?? "");
+  const [accountname, setAccountname] = useState(data?.accountname ?? "");
+  const [branchname, setBranchname] = useState(data?.branchname ?? "");
+  const [ibanno, setIbanno] = useState(data?.ibanno ?? "");
+  const [bankbic, setBankbic] = useState(data?.bankbic ?? "");
+  const [branchbic, setBranchbic] = useState(data?.branchbic ?? "");
+  const [accountno, setAccountno] = useState(data?.accountno ?? "");
+  const [sort, setSort] = useState(data?.sort ?? "");
 
   const customStyles = {
     overlay: {
@@ -83,7 +92,7 @@ const NewFabric = ({
     e?: React.MouseEvent<HTMLButtonElement>
   ) => {
     e?.preventDefault();
-    if (fabricid) {
+    if (bankaccountid) {
       update();
     } else {
       addnew();
@@ -92,14 +101,30 @@ const NewFabric = ({
 
   const addnew = async () => {
     const validation = inputFieldValidation({
-      fabricname,
+      bankname,
+      accountname,
+      branchname,
+      ibanno,
+      bankbic,
+      branchbic,
+      accountno,
+      sort,
     });
     try {
       if (validation == 0) {
-        const response = await fetch(pathname + "/api/fabrics", {
+        const response = await fetch(pathname + "/api/bankdetails", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ fabricname }),
+          body: JSON.stringify({
+            bankname,
+            accountname,
+            branchname,
+            ibanno,
+            bankbic,
+            branchbic,
+            accountno,
+            sort,
+          }),
         });
 
         const res = await response.json();
@@ -108,7 +133,7 @@ const NewFabric = ({
           if (setReloadTable) {
             setReloadTable();
           }
-          toast.success("Fabric item created successfully!", {
+          toast.success("Bank details created successfully!", {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -118,7 +143,14 @@ const NewFabric = ({
             progress: undefined,
             theme: "light",
           });
-          setFabricname("");
+          setBankname("");
+          setAccountname("");
+          setBranchname("");
+          setIbanno("");
+          setBankbic("");
+          setBranchbic("");
+          setAccountno("");
+          setSort("");
         }
       }
     } catch (error) {
@@ -137,14 +169,31 @@ const NewFabric = ({
 
   const update = async () => {
     const validation = inputFieldValidation({
-      fabricname,
+      bankname,
+      accountname,
+      branchname,
+      ibanno,
+      bankbic,
+      branchbic,
+      accountno,
+      sort,
     });
     try {
       if (validation == 0) {
-        const response = await fetch(pathname + "/api/fabrics", {
+        const response = await fetch(pathname + "/api/bankdetails", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ fabricid, fabricname }),
+          body: JSON.stringify({
+            bankaccountid,
+            bankname,
+            accountname,
+            branchname,
+            ibanno,
+            bankbic,
+            branchbic,
+            accountno,
+            sort,
+          }),
         });
 
         const res = await response.json();
@@ -153,7 +202,7 @@ const NewFabric = ({
           if (setReloadTable) {
             setReloadTable();
           }
-          toast.success("Fabric item updated successfully!", {
+          toast.success("Bank details updated successfully!", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -163,8 +212,6 @@ const NewFabric = ({
             progress: undefined,
             theme: "light",
           });
-          // setFabricid("");
-          // setFabricname("");
         }
       }
     } catch (error) {
@@ -181,7 +228,7 @@ const NewFabric = ({
     }
   };
 
-  const handleDelete = async (itemcode: any) => {
+  const handleDelete = async () => {
     // Display a toast notification with a confirmation message.
     toast.warning("Are you sure you want to delete this item?", {
       position: toast.POSITION.TOP_CENTER,
@@ -206,11 +253,11 @@ const NewFabric = ({
   };
 
   const confirmDelete = async () => {
-    if (fabricid) {
-      const response = await fetch(pathname + "/api/fabrics", {
+    if (bankaccountid) {
+      const response = await fetch(pathname + "/api/bankdetails", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fabricid }),
+        body: JSON.stringify({ bankaccountid }),
       });
 
       const res = await response.json();
@@ -220,7 +267,7 @@ const NewFabric = ({
         if (setReloadTable) {
           setReloadTable();
         }
-        toast.success("Fabric item deleted successfully!", {
+        toast.success("Bank details deleted successfully!", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -246,7 +293,7 @@ const NewFabric = ({
       if (setReloadTable) {
         setReloadTable();
       }
-      router.push("/home/fabrics");
+      router.push("/home/bankdetails");
     }
   };
 
@@ -279,26 +326,85 @@ const NewFabric = ({
         style={customStyles}
         ariaHideApp={false}
       >
-        <div className="flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md">
+        <div className="flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-screen max-w-[650px]">
           <div className="font-medium self-center text-xl sm:text-xl text-gray-800 mr-auto">
-            {fabricid ? "Update" : "Create New"}
+            {bankaccountid ? "Update" : "Create New"}
           </div>
           <div className="mt-5">
             <div className="flex flex-col mb-6">
-              <div className="relative">
-                <div className="mb-3">
-                  <NextTextReadOnlyInputField
-                    label="Fabric ID"
-                    value={fabricid}
-                    onChange={(e) => setFabricid(e.target.value)}
-                  />
+              <div className="relative flex flex-col gap-3">
+                <div className="flex flex-wrap sm:flex-nowrap gap-x-3">
+                  <div className="w-full sm:w-1/2">
+                    <NextTextReadOnlyInputField
+                      label="Bank Account ID"
+                      value={bankaccountid}
+                      onChange={(e) => setBankaccountid(e.target.value)}
+                    />
+                  </div>
+                  <div className="w-full sm:w-1/2">
+                    <NextAutoFocusTextInputField
+                      label="ibanno"
+                      value={ibanno}
+                      onChange={(e) => setIbanno(e.target.value)}
+                    />
+                  </div>
                 </div>
-                <div>
-                  <NextAutoFocusTextInputField
-                    label="Fabric Name"
-                    value={fabricname}
-                    onChange={(e) => setFabricname(e.target.value)}
-                  />
+                <div className="flex flex-wrap sm:flex-nowrap gap-x-3">
+                  <div className="w-full sm:w-1/2">
+                    <NextTextInputField
+                      label="Bank Name"
+                      value={bankname}
+                      onChange={(e) => setBankname(e.target.value)}
+                    />
+                  </div>
+                  <div className="w-full sm:w-1/2">
+                    <NextTextInputField
+                      label="Bank BIC"
+                      value={bankbic}
+                      onChange={(e) => setBankbic(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-wrap sm:flex-nowrap gap-x-3">
+                  <div className="w-full sm:w-1/2">
+                    <NextTextInputField
+                      label="Account Name"
+                      value={accountname}
+                      onChange={(e) => setAccountname(e.target.value)}
+                    />
+                  </div>
+                  <div className="w-full sm:w-1/2">
+                    <NextTextInputField
+                      label="Branch BIC"
+                      value={branchbic}
+                      onChange={(e) => setBranchbic(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-wrap sm:flex-nowrap gap-x-3">
+                  <div className="w-full sm:w-1/2">
+                    <NextTextInputField
+                      label="Branch Name"
+                      value={branchname}
+                      onChange={(e) => setBranchname(e.target.value)}
+                    />
+                  </div>
+                  <div className="w-full sm:w-1/2">
+                    <NextTextInputField
+                      label="Account No"
+                      value={accountno}
+                      onChange={(e) => setAccountno(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-wrap sm:flex-nowrap pr-3">
+                  <div className="w-full sm:w-1/2">
+                    <NextTextInputField
+                      label="Sort"
+                      value={sort}
+                      onChange={(e) => setSort(e.target.value)}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -317,7 +423,7 @@ const NewFabric = ({
                   Save
                 </Button>
               </div>
-              <div className={fabricid ? "" : "hidden"}>
+              <div className={bankaccountid ? "" : "hidden"}>
                 <Button
                   isIconOnly
                   color="warning"
@@ -337,4 +443,4 @@ const NewFabric = ({
     </div>
   );
 };
-export default NewFabric;
+export default NewBankDetail;

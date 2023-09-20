@@ -15,13 +15,13 @@ import { useRouter } from "next/navigation";
 import { MdOutlineEditNote } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import NewFabric from "./addnew";
+import NewBankDetail from "./addnew";
 
-export const FabricTable = ({
-  fabricRowData,
+export const BankDetailTable = ({
+  bankdetailsRowData,
   setReloadTable,
 }: {
-  fabricRowData?: any[];
+  bankdetailsRowData?: any[];
   setReloadTable?: () => void;
 }) => {
   let pathname: string = "";
@@ -40,13 +40,25 @@ export const FabricTable = ({
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const tableHeads = ["#", "Fabric ID", "Fabric Name", ""];
+  const tableHeads = [
+    "#",
+    "Bank A/C ID",
+    "ibanno",
+    "Bank Name",
+    "Bank BIC",
+    "Account Name",
+    "Branch Name",
+    "Branch BIC",
+    "Account No",
+    "Sort",
+    "",
+  ];
 
   // const editItem = async (itemcode: any) => {
   //   router.push("/home/items");
   // };
 
-  const handleDelete = async (fabricid: any) => {
+  const handleDelete = async (bankaccountid: any) => {
     // Display a toast notification with a confirmation message.
     toast.warning("Are you sure you want to delete this item?", {
       position: toast.POSITION.TOP_CENTER,
@@ -56,7 +68,7 @@ export const FabricTable = ({
         <div>
           <Button
             color="default"
-            onClick={() => confirmDelete(fabricid)}
+            onClick={() => confirmDelete(bankaccountid)}
             className="mb-1"
           >
             Yes
@@ -74,12 +86,12 @@ export const FabricTable = ({
     });
   };
 
-  const confirmDelete = async (fabricid: any) => {
-    if (fabricid) {
-      const response = await fetch(pathname + "/api/fabrics", {
+  const confirmDelete = async (bankaccountid: any) => {
+    if (bankaccountid) {
+      const response = await fetch(pathname + "/api/bankdetails", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fabricid }),
+        body: JSON.stringify({ bankaccountid }),
       });
 
       const res = await response.json();
@@ -88,7 +100,7 @@ export const FabricTable = ({
           setReloadTable();
         }
         toast.dismiss();
-        toast.success("Fabric item deleted successfully!", {
+        toast.success("Bank details deleted successfully!", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -114,11 +126,11 @@ export const FabricTable = ({
       if (setReloadTable) {
         setReloadTable();
       }
-      router.push("/home/fabrics");
+      router.push("/home/bankdetails");
     }
   };
   return (
-    <div className="md:px-2 py-2 sm:w-2/3 w-full">
+    <div className="md:px-2 py-2 sm:w-5/5 w-full">
       <div className="shadow rounded border-b border-gray-200 w-full">
         <Table isStriped aria-label="Example static collection table">
           <TableHeader>
@@ -127,14 +139,24 @@ export const FabricTable = ({
             ))}
           </TableHeader>
           <TableBody>
-            {fabricRowData?.map((tableRow: any, index: number) => (
-              <TableRow key={tableRow.fabricid} className="bg-purple-gray-300">
+            {bankdetailsRowData?.map((tableRow: any, index: number) => (
+              <TableRow
+                key={tableRow.bankaccountid}
+                className="bg-purple-gray-300"
+              >
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{tableRow.fabricid}</TableCell>
-                <TableCell>{tableRow.fabricname}</TableCell>
+                <TableCell>{tableRow.bankaccountid}</TableCell>
+                <TableCell>{tableRow.bankname}</TableCell>
+                <TableCell>{tableRow.accountname}</TableCell>
+                <TableCell>{tableRow.branchname}</TableCell>
+                <TableCell>{tableRow.ibanno}</TableCell>
+                <TableCell>{tableRow.bankbic}</TableCell>
+                <TableCell>{tableRow.branchbic}</TableCell>
+                <TableCell>{tableRow.accountno}</TableCell>
+                <TableCell>{tableRow.sort}</TableCell>
                 <TableCell>
                   <div className="flex gap-1">
-                    <NewFabric
+                    <NewBankDetail
                       type="edit"
                       setReloadTable={setReloadTable}
                       data={tableRow}
@@ -146,7 +168,7 @@ export const FabricTable = ({
                       aria-label="Create Item"
                     >
                       <RiDeleteBin5Line
-                        onClick={() => handleDelete(tableRow.fabricid)}
+                        onClick={() => handleDelete(tableRow.bankaccountid)}
                         className="inline-block h-6 w-6 text-red-700 hover:text-red-500 cursor-pointer"
                       />
                     </Button>

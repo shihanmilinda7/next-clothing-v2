@@ -1,7 +1,5 @@
 "use client";
 
-import NewCustomer from "@/app/components/page-components/customers/addnew";
-import { CustomerTable } from "@/app/components/page-components/customers/table";
 import NewFabric from "@/app/components/page-components/fabrics/addnew";
 import { FabricTable } from "@/app/components/page-components/fabrics/table";
 import NewSupplier from "@/app/components/page-components/suppliers/addnew";
@@ -9,7 +7,7 @@ import { SupplierTable } from "@/app/components/page-components/suppliers/table"
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-export default function Customers() {
+export default function Suppliers() {
   const router = useRouter();
 
   //get pathname
@@ -25,7 +23,7 @@ export default function Customers() {
       pathname = pathname.substring(0, r);
     }
   }
-  const [customerRowData, setCustomerRowData] = useState<any[]>([]);
+  const [supplierRowData, setSupplierRowData] = useState<any[]>([]);
   const [reloadTable, setReloadTable] = useState(false);
 
   useEffect(() => {
@@ -33,9 +31,9 @@ export default function Customers() {
   }, [reloadTable]);
 
   const fetchFabricData = async () => {
-    const response = await fetch(pathname + "/api/customers");
+    const response = await fetch(pathname + "/api/suppliers");
     const res = await response.json();
-    setCustomerRowData(res.customerData);
+    setSupplierRowData(res.supplierData);
   };
 
   const toggleReloadTable = () => {
@@ -45,14 +43,14 @@ export default function Customers() {
   return (
     <div className="flex ml-3 flex-col bg-slate-200 w-full">
       <span className="text-3xl font-black leading-none text-gray-900 select-none">
-        Custom<span className="text-indigo-600">ers</span>
+        Suppli<span className="text-indigo-600">ers</span>
       </span>
       <div className="justify-end w-full flex mt-3">
-        <NewCustomer type="new" setReloadTable={toggleReloadTable} />
+        <NewSupplier type="new" setReloadTable={toggleReloadTable} />
       </div>
       <div className="flex w-full mt-3 item-center justify-center">
-        <CustomerTable
-          customerRowData={customerRowData}
+        <SupplierTable
+          supplierRowData={supplierRowData}
           setReloadTable={toggleReloadTable}
         />
       </div>

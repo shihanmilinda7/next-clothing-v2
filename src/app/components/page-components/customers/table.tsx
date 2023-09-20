@@ -15,13 +15,13 @@ import { useRouter } from "next/navigation";
 import { MdOutlineEditNote } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import NewFabric from "./addnew";
+import NewCustomer from "./addnew";
 
-export const FabricTable = ({
-  fabricRowData,
+export const CustomerTable = ({
+  customerRowData,
   setReloadTable,
 }: {
-  fabricRowData?: any[];
+  customerRowData?: any[];
   setReloadTable?: () => void;
 }) => {
   let pathname: string = "";
@@ -40,13 +40,22 @@ export const FabricTable = ({
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const tableHeads = ["#", "Fabric ID", "Fabric Name", ""];
+  const tableHeads = [
+    "#",
+    "Customer ID",
+    "Customer Code",
+    "Customer Name",
+    "Email",
+    "Phone",
+    "Address",
+    "",
+  ];
 
   // const editItem = async (itemcode: any) => {
   //   router.push("/home/items");
   // };
 
-  const handleDelete = async (fabricid: any) => {
+  const handleDelete = async (customerid: any) => {
     // Display a toast notification with a confirmation message.
     toast.warning("Are you sure you want to delete this item?", {
       position: toast.POSITION.TOP_CENTER,
@@ -56,7 +65,7 @@ export const FabricTable = ({
         <div>
           <Button
             color="default"
-            onClick={() => confirmDelete(fabricid)}
+            onClick={() => confirmDelete(customerid)}
             className="mb-1"
           >
             Yes
@@ -74,12 +83,12 @@ export const FabricTable = ({
     });
   };
 
-  const confirmDelete = async (fabricid: any) => {
-    if (fabricid) {
-      const response = await fetch(pathname + "/api/fabrics", {
+  const confirmDelete = async (customerid: any) => {
+    if (customerid) {
+      const response = await fetch(pathname + "/api/customers", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fabricid }),
+        body: JSON.stringify({ customerid }),
       });
 
       const res = await response.json();
@@ -88,7 +97,7 @@ export const FabricTable = ({
           setReloadTable();
         }
         toast.dismiss();
-        toast.success("Fabric item deleted successfully!", {
+        toast.success("Customer deleted successfully!", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -114,11 +123,11 @@ export const FabricTable = ({
       if (setReloadTable) {
         setReloadTable();
       }
-      router.push("/home/fabrics");
+      router.push("/home/customers");
     }
   };
   return (
-    <div className="md:px-2 py-2 sm:w-2/3 w-full">
+    <div className="md:px-2 py-2 sm:w-4/5 w-full">
       <div className="shadow rounded border-b border-gray-200 w-full">
         <Table isStriped aria-label="Example static collection table">
           <TableHeader>
@@ -127,14 +136,21 @@ export const FabricTable = ({
             ))}
           </TableHeader>
           <TableBody>
-            {fabricRowData?.map((tableRow: any, index: number) => (
-              <TableRow key={tableRow.fabricid} className="bg-purple-gray-300">
+            {customerRowData?.map((tableRow: any, index: number) => (
+              <TableRow
+                key={tableRow.customerid}
+                className="bg-purple-gray-300"
+              >
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{tableRow.fabricid}</TableCell>
-                <TableCell>{tableRow.fabricname}</TableCell>
+                <TableCell>{tableRow.customerid}</TableCell>
+                <TableCell>{tableRow.customercode}</TableCell>
+                <TableCell>{tableRow.customername}</TableCell>
+                <TableCell>{tableRow.email}</TableCell>
+                <TableCell>{tableRow.phone}</TableCell>
+                <TableCell>{tableRow.address}</TableCell>
                 <TableCell>
                   <div className="flex gap-1">
-                    <NewFabric
+                    <NewCustomer
                       type="edit"
                       setReloadTable={setReloadTable}
                       data={tableRow}
@@ -146,7 +162,7 @@ export const FabricTable = ({
                       aria-label="Create Item"
                     >
                       <RiDeleteBin5Line
-                        onClick={() => handleDelete(tableRow.fabricid)}
+                        onClick={() => handleDelete(tableRow.customerid)}
                         className="inline-block h-6 w-6 text-red-700 hover:text-red-500 cursor-pointer"
                       />
                     </Button>

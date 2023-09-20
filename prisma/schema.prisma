@@ -29,6 +29,41 @@ model staff{
   createdAt DateTime @default(now())
 }
 
+model fabrics{
+  fabricid       Int      @id @default(autoincrement())
+  fabricname String   
+}
+
+model suppliers{
+  supplierid       Int      @id @default(autoincrement())
+  suppliercode String   
+  suppliername String   
+  email String   
+  phone String   
+  address String   
+}
+
+model customers{
+  customerid       Int      @id @default(autoincrement())
+  customercode String   
+  customername String   
+  email String   
+  phone String   
+  address String   
+}
+
+model bankdetails{
+  bankaccountid       Int      @id @default(autoincrement())
+  bankname String   
+  accountname String   
+  branchname String   
+  ibanno String   
+  bankbic String   
+  branchbic String   
+  accountno String   
+  sort String   
+}
+
 model categories{
   categoryid       Int      @id @default(autoincrement())
   categoryname String   

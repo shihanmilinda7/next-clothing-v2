@@ -45,8 +45,8 @@ const SideNavbar = () => {
       icon: CgProfile,
       margin: true,
     },
-    { name: "Suppliers", link: "/home/sales", icon: MdOutlineFireTruck },
-    { name: "Bank Accounts", link: "/home/products", icon: BsBank },
+    { name: "Suppliers", link: "/home/suppliers", icon: MdOutlineFireTruck },
+    { name: "Bank Accounts", link: "/home/bankdetails", icon: BsBank },
     { name: "Fabrics", link: "/home/fabrics", icon: GiRolledCloth },
     { name: "Reports", link: "/", icon: TbReportAnalytics, margin: true },
     { name: "Setting", link: "/", icon: RiSettings4Line },
@@ -103,6 +103,15 @@ const SideNavbar = () => {
         break;
       case "/home/customers":
         window.location.href = "/home/customers";
+        break;
+      case "/home/suppliers":
+        window.location.href = "/home/suppliers";
+        break;
+      case "/home/customers":
+        window.location.href = "/home/customers";
+        break;
+      case "/home/bankdetails":
+        window.location.href = "/home/bankdetails";
         break;
       default:
         window.location.href = "/";

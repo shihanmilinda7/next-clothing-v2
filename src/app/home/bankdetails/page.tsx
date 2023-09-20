@@ -1,7 +1,7 @@
 "use client";
 
-import NewCustomer from "@/app/components/page-components/customers/addnew";
-import { CustomerTable } from "@/app/components/page-components/customers/table";
+import NewBankDetail from "@/app/components/page-components/bankdetails/addnew";
+import { BankDetailTable } from "@/app/components/page-components/bankdetails/table";
 import NewFabric from "@/app/components/page-components/fabrics/addnew";
 import { FabricTable } from "@/app/components/page-components/fabrics/table";
 import NewSupplier from "@/app/components/page-components/suppliers/addnew";
@@ -9,7 +9,7 @@ import { SupplierTable } from "@/app/components/page-components/suppliers/table"
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-export default function Customers() {
+export default function BankDetails() {
   const router = useRouter();
 
   //get pathname
@@ -25,17 +25,17 @@ export default function Customers() {
       pathname = pathname.substring(0, r);
     }
   }
-  const [customerRowData, setCustomerRowData] = useState<any[]>([]);
+  const [bankdetailsRowData, setBankdetailsRowData] = useState<any[]>([]);
   const [reloadTable, setReloadTable] = useState(false);
 
   useEffect(() => {
-    fetchFabricData();
+    fetchBankdetailsData();
   }, [reloadTable]);
 
-  const fetchFabricData = async () => {
-    const response = await fetch(pathname + "/api/customers");
+  const fetchBankdetailsData = async () => {
+    const response = await fetch(pathname + "/api/bankdetails");
     const res = await response.json();
-    setCustomerRowData(res.customerData);
+    setBankdetailsRowData(res.bankDetailData);
   };
 
   const toggleReloadTable = () => {
@@ -45,14 +45,14 @@ export default function Customers() {
   return (
     <div className="flex ml-3 flex-col bg-slate-200 w-full">
       <span className="text-3xl font-black leading-none text-gray-900 select-none">
-        Custom<span className="text-indigo-600">ers</span>
+        Bank De<span className="text-indigo-600">tails</span>
       </span>
       <div className="justify-end w-full flex mt-3">
-        <NewCustomer type="new" setReloadTable={toggleReloadTable} />
+        <NewBankDetail type="new" setReloadTable={toggleReloadTable} />
       </div>
       <div className="flex w-full mt-3 item-center justify-center">
-        <CustomerTable
-          customerRowData={customerRowData}
+        <BankDetailTable
+          bankdetailsRowData={bankdetailsRowData}
           setReloadTable={toggleReloadTable}
         />
       </div>

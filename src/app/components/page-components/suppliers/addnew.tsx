@@ -14,8 +14,10 @@ import { GiCancel } from "react-icons/gi";
 import { inputFieldValidation } from "@/app/utils/utils";
 import { MdOutlineEditNote } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import NextTextInputField from "../../nextui-input-fields/next-text-input-fields";
+import NextAreaTextInputField from "../../nextui-input-fields/next-textarea-input-fields";
 
-const NewFabric = ({
+const NewSupplier = ({
   type,
   setReloadTable,
   data,
@@ -44,8 +46,12 @@ const NewFabric = ({
 
   const { data: session, status } = useSession();
 
-  const [fabricid, setFabricid] = useState(data?.fabricid ?? "");
-  const [fabricname, setFabricname] = useState(data?.fabricname ?? "");
+  const [supplierid, setSupplierid] = useState(data?.supplierid ?? "");
+  const [suppliercode, setSuppliercode] = useState(data?.suppliercode ?? "");
+  const [suppliername, setSupplername] = useState(data?.suppliername ?? "");
+  const [email, setEmail] = useState(data?.email ?? "");
+  const [phone, setPhone] = useState(data?.phone ?? "");
+  const [address, setAddress] = useState(data?.address ?? "");
 
   const customStyles = {
     overlay: {
@@ -83,7 +89,7 @@ const NewFabric = ({
     e?: React.MouseEvent<HTMLButtonElement>
   ) => {
     e?.preventDefault();
-    if (fabricid) {
+    if (supplierid) {
       update();
     } else {
       addnew();
@@ -92,14 +98,21 @@ const NewFabric = ({
 
   const addnew = async () => {
     const validation = inputFieldValidation({
-      fabricname,
+      suppliercode,
+      suppliername,
     });
     try {
       if (validation == 0) {
-        const response = await fetch(pathname + "/api/fabrics", {
+        const response = await fetch(pathname + "/api/suppliers", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ fabricname }),
+          body: JSON.stringify({
+            suppliercode,
+            suppliername,
+            email,
+            phone,
+            address,
+          }),
         });
 
         const res = await response.json();
@@ -108,7 +121,7 @@ const NewFabric = ({
           if (setReloadTable) {
             setReloadTable();
           }
-          toast.success("Fabric item created successfully!", {
+          toast.success("Supplier created successfully!", {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -118,7 +131,11 @@ const NewFabric = ({
             progress: undefined,
             theme: "light",
           });
-          setFabricname("");
+          setSuppliercode("");
+          setSupplername("");
+          setEmail("");
+          setPhone("");
+          setAddress("");
         }
       }
     } catch (error) {
@@ -137,14 +154,22 @@ const NewFabric = ({
 
   const update = async () => {
     const validation = inputFieldValidation({
-      fabricname,
+      suppliercode,
+      suppliername,
     });
     try {
       if (validation == 0) {
-        const response = await fetch(pathname + "/api/fabrics", {
+        const response = await fetch(pathname + "/api/suppliers", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ fabricid, fabricname }),
+          body: JSON.stringify({
+            supplierid,
+            suppliercode,
+            suppliername,
+            email,
+            phone,
+            address,
+          }),
         });
 
         const res = await response.json();
@@ -153,7 +178,7 @@ const NewFabric = ({
           if (setReloadTable) {
             setReloadTable();
           }
-          toast.success("Fabric item updated successfully!", {
+          toast.success("Supplier updated successfully!", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -181,7 +206,7 @@ const NewFabric = ({
     }
   };
 
-  const handleDelete = async (itemcode: any) => {
+  const handleDelete = async () => {
     // Display a toast notification with a confirmation message.
     toast.warning("Are you sure you want to delete this item?", {
       position: toast.POSITION.TOP_CENTER,
@@ -206,11 +231,11 @@ const NewFabric = ({
   };
 
   const confirmDelete = async () => {
-    if (fabricid) {
-      const response = await fetch(pathname + "/api/fabrics", {
+    if (supplierid) {
+      const response = await fetch(pathname + "/api/suppliers", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fabricid }),
+        body: JSON.stringify({ supplierid }),
       });
 
       const res = await response.json();
@@ -220,7 +245,7 @@ const NewFabric = ({
         if (setReloadTable) {
           setReloadTable();
         }
-        toast.success("Fabric item deleted successfully!", {
+        toast.success("Supplier deleted successfully!", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -246,7 +271,7 @@ const NewFabric = ({
       if (setReloadTable) {
         setReloadTable();
       }
-      router.push("/home/fabrics");
+      router.push("/home/suppliers");
     }
   };
 
@@ -279,25 +304,53 @@ const NewFabric = ({
         style={customStyles}
         ariaHideApp={false}
       >
-        <div className="flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md">
+        <div className="flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-screen max-w-md">
           <div className="font-medium self-center text-xl sm:text-xl text-gray-800 mr-auto">
-            {fabricid ? "Update" : "Create New"}
+            {supplierid ? "Update" : "Create New"}
           </div>
           <div className="mt-5">
             <div className="flex flex-col mb-6">
-              <div className="relative">
-                <div className="mb-3">
+              <div className="relative flex flex-col gap-3">
+                <div className="">
                   <NextTextReadOnlyInputField
-                    label="Fabric ID"
-                    value={fabricid}
-                    onChange={(e) => setFabricid(e.target.value)}
+                    label="Supplier ID"
+                    value={supplierid}
+                    onChange={(e) => setSupplierid(e.target.value)}
                   />
                 </div>
                 <div>
                   <NextAutoFocusTextInputField
-                    label="Fabric Name"
-                    value={fabricname}
-                    onChange={(e) => setFabricname(e.target.value)}
+                    label="Supplier Code"
+                    value={suppliercode}
+                    onChange={(e) => setSuppliercode(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <NextTextInputField
+                    label="Supplier Name"
+                    value={suppliername}
+                    onChange={(e) => setSupplername(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <NextTextInputField
+                    label="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <NextTextInputField
+                    label="Phone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <NextAreaTextInputField
+                    label="Address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>
               </div>
@@ -317,7 +370,7 @@ const NewFabric = ({
                   Save
                 </Button>
               </div>
-              <div className={fabricid ? "" : "hidden"}>
+              <div className={supplierid ? "" : "hidden"}>
                 <Button
                   isIconOnly
                   color="warning"
@@ -337,4 +390,4 @@ const NewFabric = ({
     </div>
   );
 };
-export default NewFabric;
+export default NewSupplier;
