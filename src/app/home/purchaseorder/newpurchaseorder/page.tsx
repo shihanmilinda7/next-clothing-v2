@@ -268,7 +268,7 @@ export default function PurchaseOrder() {
                 PO details
               </span>
             </div>
-            <PoDetailTable />
+            <PoDetailTable rationpacksizeIn={rationpacksize}/>
           </div>
         </div>
       </div>

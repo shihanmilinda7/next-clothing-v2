@@ -12,11 +12,15 @@ import {
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PoDetailTableRow } from "./tablerow";
-import { AiFillPlusCircle } from "react-icons/ai";
+import { AiFillPlusCircle, AiOutlineUndo } from "react-icons/ai";
 
-export const PoDetailTable = () => {
+export const PoDetailTable = ({
+  rationpacksizeIn,
+}: {
+  rationpacksizeIn: number;
+}) => {
   let pathname: string = "";
 
   try {
@@ -40,17 +44,27 @@ export const PoDetailTable = () => {
     { label: "Ratio pack", px: "2" },
     { label: "Single", px: "2" },
     { label: "Total", px: "2" },
-    { label: "", px: "2" },
   ];
 
   const [tableData, setTableData] = useState([
-    { id: 1, size: "Data 1", ratiopack: "Data 2", single: "Data 3", total: 5 },
-    { id: 2, size: "Data 2", ratiopack: "Data 3", single: "Data 4", total: 10 },
-    { id: 3, size: "Data 3", ratiopack: "Data 4", single: "Data 5", total: 10 },
-    { id: 4, size: "Data 4", ratiopack: "Data 5", single: "Data 6", total: 10 },
+    { id: 1, size: "Data 1", ratiopack: 2, single: 2, total: 0 },
+    { id: 2, size: "Data 2", ratiopack: 3, single: 3, total: 0 },
+    { id: 3, size: "Data 3", ratiopack: 4, single: 4, total: 0 },
+    { id: 4, size: "Data 4", ratiopack: 5, single: 5, total: 0 },
   ]);
 
-  const [removedRows, setRemovedRows] = useState([]);
+  const [lastRemovedRow, setLastRemovedRow] = useState(null);
+  const [tableUpdate, setTableUpdate] = useState(false);
+
+  useEffect(() => {
+    const updatedTableData = tableData.map((item) => ({
+      ...item,
+      total: item.ratiopack * rationpacksizeIn + item.single,
+    }));
+
+    // Update the state with the calculated tableData
+    setTableData(updatedTableData);
+  }, [tableUpdate, rationpacksizeIn]);
 
   const addRow1 = () => {
     // Generate a unique ID for the new row
@@ -60,8 +74,8 @@ export const PoDetailTable = () => {
     const newEmptyRow = {
       id: newRowId,
       size: "",
-      ratiopack: "",
-      single: "",
+      ratiopack: 0,
+      single: 0,
       total: 0,
     };
 
@@ -76,8 +90,8 @@ export const PoDetailTable = () => {
     const newEmptyRow = {
       id: newRowId,
       size: "",
-      ratiopack: "",
-      single: "",
+      ratiopack: 0,
+      single: 0,
       total: 0,
     };
     const updatedTableData = [...tableData];
@@ -85,30 +99,37 @@ export const PoDetailTable = () => {
     setTableData(updatedTableData);
   };
 
-  const removeRow = (rowData: any, rowIndex: any) => {
+  const removeRow = (rowData, rowIndex) => {
     const updatedTableData = tableData.filter((row) => row.id !== rowData.id);
 
-    // Store the removed row and its original index in the removedRows state
-    setRemovedRows([...removedRows, { rowData, rowIndex }]);
+    // Store the removed row and its original index
+    setLastRemovedRow({ rowData, rowIndex });
 
     setTableData(updatedTableData);
   };
 
-  const undoRemove = (removedRow, originalIndex) => {
+  const undoRemove = () => {
+    if (!lastRemovedRow) return;
+
     const updatedTableData = [...tableData];
-    updatedTableData.splice(originalIndex, 0, removedRow);
+    updatedTableData.splice(lastRemovedRow.rowIndex, 0, lastRemovedRow.rowData);
     setTableData(updatedTableData);
 
-    // Remove the undone row from the removedRows state
-    const updatedRemovedRows = removedRows.filter(
-      (item) => item.rowData.id !== removedRow.id
+    // Clear the lastRemovedRow variable
+    setLastRemovedRow(null);
+  };
+
+  const updateTableRows = (newVal: any) => {
+    const updatedArray = tableData.map((r) =>
+      r.id === newVal.id ? newVal : r
     );
-    setRemovedRows(updatedRemovedRows);
+    setTableData(updatedArray);
+    setTableUpdate((prv: boolean) => !prv);
   };
 
   return (
     <div className="md:px-2 py-1 sm:w-3/3 w-full">
-      Data - {JSON.stringify(tableData)}
+      {/* Data - {JSON.stringify(tableData)} */}
       <div className="shadow rounded-lg border-b border-gray-200 w-full">
         <table className="min-w-full bg-white">
           <thead className="border-b-2 text-black border-purple-400">
@@ -140,6 +161,29 @@ export const PoDetailTable = () => {
                   {head.label}
                 </th>
               ))}
+              <th
+                className={
+                  "text-center py-1 uppercase text-sm font-bold px-1/2"
+                }
+              >
+                <div
+                  className={`${
+                    lastRemovedRow ? "" : "pointer-events-none opacity-50"
+                  }`}
+                >
+                  <Button
+                    isIconOnly
+                    color="warning"
+                    variant="light"
+                    aria-label="Create Item"
+                  >
+                    <AiOutlineUndo
+                      onClick={undoRemove}
+                      className="inline-block h-6 w-6 text-indigo-700 hover:text-indigo-500 cursor-pointer"
+                    />
+                  </Button>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody className="text-gray-700">
@@ -150,23 +194,21 @@ export const PoDetailTable = () => {
                 tableRowIn={tableRow}
                 onAddRow={() => addRow(tableRow)}
                 onRemoveRow={() => removeRow(tableRow, index)}
+                updateTableRows={updateTableRows}
               />
             ))}
           </tbody>
         </table>
-        <div>
-          <h3>Removed Rows</h3>
-          <ul>
-            {removedRows.map(({ rowData, rowIndex }) => (
-              <li key={rowData.id}>
-                {rowData.size}, {rowData.ratiopack}, {rowData.single}
-                <button onClick={() => undoRemove(rowData, rowIndex)}>
-                  Undo
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* <div>
+          <h3>Removed Row</h3>
+          {lastRemovedRow && (
+            <div>
+              {lastRemovedRow.rowData.data1}, {lastRemovedRow.rowData.data2}
+              {lastRemovedRow.rowData.data3}
+              <button onClick={undoRemove}>Undo</button>
+            </div>
+          )}
+        </div> */}
       </div>
     </div>
   );
