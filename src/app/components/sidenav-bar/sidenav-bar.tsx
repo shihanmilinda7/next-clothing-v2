@@ -37,7 +37,7 @@ const SideNavbar = () => {
   const dispatch = useDispatch();
 
   const menus = [
-    { name: "POs", link: "/home/sales", icon: BiPurchaseTagAlt },
+    { name: "POs", link: "/home/purchaseorder", icon: BiPurchaseTagAlt },
     { name: "Invoice", link: "/home/sales", icon: LiaFileInvoiceDollarSolid },
     {
       name: "Customers",
@@ -112,6 +112,9 @@ const SideNavbar = () => {
         break;
       case "/home/bankdetails":
         window.location.href = "/home/bankdetails";
+        break;
+      case "/home/purchaseorder":
+        window.location.href = "/home/purchaseorder";
         break;
       default:
         window.location.href = "/";

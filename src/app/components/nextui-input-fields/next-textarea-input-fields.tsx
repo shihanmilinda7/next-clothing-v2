@@ -5,13 +5,16 @@ const NextAreaTextInputField = ({
   label,
   value,
   onChange,
+  minRows = 1,
 }: {
   label: string;
   value: any;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  minRows?: number;
 }) => {
   return (
     <Textarea
+      minRows={minRows}
       variant="flat"
       label={label}
       labelPlacement="inside"
