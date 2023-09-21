@@ -16,6 +16,7 @@ import NextSelectInputField from "@/app/components/nextui-input-fields/next-sele
 import NextNumberInputField from "@/app/components/nextui-input-fields/next-number-input-fields";
 import NextAreaTextInputField from "@/app/components/nextui-input-fields/next-textarea-input-fields";
 import { PoDetailTable } from "@/app/components/page-components/purchaseorder/table";
+import NextNumberReadOnlyInputField from "@/app/components/nextui-input-fields/next-number-readonly-input-fields";
 
 export default function PurchaseOrder() {
   const router = useRouter();
@@ -60,12 +61,42 @@ export default function PurchaseOrder() {
 
   const shippingmethodOptionValues = [
     {
-      value: "flatpack",
-      name: "flatpack",
+      value: "Flat pack",
+      name: "Flat pack",
     },
     {
       value: "m2",
       name: "m2",
+    },
+  ];
+
+  const currencyOptionValues = [
+    {
+      value: "USD",
+      name: "USD",
+    },
+    {
+      value: "Pound sterling",
+      name: "Pound sterling",
+    },
+  ];
+
+  const orderStatusOptionValues = [
+    {
+      value: "Initiated",
+      name: "Initiated",
+    },
+    {
+      value: "Shipped",
+      name: "Shipped",
+    },
+    {
+      value: "Delivered",
+      name: "Delivered",
+    },
+    {
+      value: "Closed",
+      name: "Closed",
     },
   ];
 
@@ -76,13 +107,15 @@ export default function PurchaseOrder() {
   );
   const [customerid, setCustomerid] = useState(
     (tmpSelPoForEdit?.customerid
-      ? new Set([tmpSelPoForEdit?.category.toString()])
+      ? new Set([tmpSelPoForEdit?.customerid.toString()])
       : new Set([])) ?? new Set([])
   );
   const [date, setDate] = useState(tmpSelPoForEdit?.date ?? "");
 
   const [supplierid, setSupplierid] = useState(
-    tmpSelPoForEdit?.supplierid ?? ""
+    (tmpSelPoForEdit?.supplierid
+      ? new Set([tmpSelPoForEdit?.supplierid.toString()])
+      : new Set([])) ?? new Set([])
   );
   const [customerpo, setCustomerpo] = useState(
     tmpSelPoForEdit?.customerpo ?? ""
@@ -92,7 +125,9 @@ export default function PurchaseOrder() {
   );
 
   const [shippingmode, setShippingmode] = useState(
-    tmpSelPoForEdit?.shippingmode ?? ""
+    (tmpSelPoForEdit?.shippingmode
+      ? new Set([tmpSelPoForEdit?.shippingmode.toString()])
+      : new Set([])) ?? new Set([])
   );
   const [customerstylename, setCustomerstylename] = useState(
     tmpSelPoForEdit?.customerstylename ?? ""
@@ -102,9 +137,15 @@ export default function PurchaseOrder() {
   );
 
   const [shippingmethod, setShippingmethod] = useState(
-    tmpSelPoForEdit?.shippingmethod ?? ""
+    (tmpSelPoForEdit?.shippingmethod
+      ? new Set([tmpSelPoForEdit?.shippingmethod.toString()])
+      : new Set([])) ?? new Set([])
   );
-  const [fabricid, setFabricid] = useState(tmpSelPoForEdit?.fabricid ?? "");
+  const [fabricid, setFabricid] = useState(
+    (tmpSelPoForEdit?.fabricid
+      ? new Set([tmpSelPoForEdit?.fabricid.toString()])
+      : new Set([])) ?? new Set([])
+  );
   const [rationpacksize, setRationpacksize] = useState(
     tmpSelPoForEdit?.rationpacksize ?? ""
   );
@@ -113,6 +154,33 @@ export default function PurchaseOrder() {
   const [colour, setcolour] = useState(tmpSelPoForEdit?.colour ?? "");
   const [description, setDescription] = useState(
     tmpSelPoForEdit?.description ?? ""
+  );
+
+  const [supplierprice, setSupplierprice] = useState(
+    tmpSelPoForEdit?.supplierprice ?? ""
+  );
+  const [totalqty, setTotalqty] = useState(tmpSelPoForEdit?.totalqty ?? 0);
+  const [totalvalue, setTotalvalue] = useState(
+    tmpSelPoForEdit?.totalvalue ?? 0
+  );
+
+  const [sellingprice, setSellingprice] = useState(
+    tmpSelPoForEdit?.sellingprice ?? ""
+  );
+  const [colourcode, setColourcode] = useState(
+    tmpSelPoForEdit?.colourcode ?? ""
+  );
+  const [remark, setRemark] = useState(tmpSelPoForEdit?.remark ?? "");
+  const [currency, setCurrency] = useState(
+    (tmpSelPoForEdit?.currency
+      ? new Set([tmpSelPoForEdit?.currency.toString()])
+      : new Set(["USD"])) ?? new Set([])
+  );
+
+  const [orderstatus, setOrderstatus] = useState(
+    (tmpSelPoForEdit?.orderstatus
+      ? new Set([tmpSelPoForEdit?.orderstatus.toString()])
+      : new Set([])) ?? new Set([])
   );
 
   useEffect(() => {
@@ -128,12 +196,24 @@ export default function PurchaseOrder() {
       <div>
         <div className="w-full flex flex-col gap-4 mt-2 pb-2 pt-2 border border-gray-400 border-solid rounded-lg">
           <div className="flex flex-wrap">
-            <div className="mb-6 md:mb-0 gap-4 w-full px-3 sm:w-1/3">
-              <NextTextReadOnlyInputField
-                label="Purchase order ID"
-                value={purchaseorderid}
-                onChange={(e) => setPurchaseorderid(e.target.value)}
-              />
+            <div className="mb-6 md:mb-0 gap-4 w-full px-3 sm:w-1/3 flex">
+              <div className="w-1/2">
+                <NextTextReadOnlyInputField
+                  label="Purchase order ID"
+                  value={purchaseorderid}
+                  onChange={(e) => setPurchaseorderid(e.target.value)}
+                />
+              </div>
+              <div className="w-1/2">
+                <NextSelectInputField
+                  label="Order status"
+                  value={orderstatus}
+                  onChange={(e) =>
+                    handleSelectChangeEvent(e, setOrderstatus, orderstatus)
+                  }
+                  optionValues={orderStatusOptionValues}
+                />
+              </div>
             </div>
             <div className="mb-6 md:mb-0 gap-4 w-full px-3 sm:w-1/3">
               <NextSelectInputField
@@ -268,7 +348,91 @@ export default function PurchaseOrder() {
                 PO details
               </span>
             </div>
-            <PoDetailTable rationpacksizeIn={rationpacksize}/>
+            <PoDetailTable rationpacksizeIn={rationpacksize} />
+          </div>
+
+          <div className="flex flex-wrap">
+            <div className="mb-6 md:mb-0 gap-4 w-full px-3 sm:w-1/3 flex">
+              <div className="w-3/5">
+                <NextNumberInputField
+                  label="Supplier price"
+                  value={supplierprice}
+                  onChange={(e) => setSupplierprice(e.target.value)}
+                />
+              </div>
+              <div className="w-2/5">
+                <NextSelectInputField
+                  label="Currency"
+                  value={currency}
+                  onChange={(e) =>
+                    handleSelectChangeEvent(e, setCurrency, currency)
+                  }
+                  optionValues={currencyOptionValues}
+                />
+              </div>
+            </div>
+            <div className="mb-6 md:mb-0 gap-4 w-full px-3 sm:w-1/3">
+              <NextNumberReadOnlyInputField
+                label="Total qty"
+                value={totalqty}
+                onChange={(e) => setTotalqty(e.target.value)}
+              />
+            </div>
+            <div className="mb-6 md:mb-0 gap-4 w-full px-3 sm:w-1/3 flex">
+              <div className="w-3/5">
+                <NextNumberReadOnlyInputField
+                  label="Total value"
+                  value={totalvalue}
+                  onChange={(e) => setTotalvalue(e.target.value)}
+                />
+              </div>
+              <div className="w-2/5">
+                <NextSelectInputField
+                  label="Currency"
+                  value={currency}
+                  onChange={(e) =>
+                    handleSelectChangeEvent(e, setCurrency, currency)
+                  }
+                  optionValues={currencyOptionValues}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap">
+            <div className="mb-6 md:mb-0 gap-4 w-full px-3 sm:w-1/3  flex">
+              <div className="w-3/5">
+                <NextNumberInputField
+                  label="Selling price"
+                  value={sellingprice}
+                  onChange={(e) => setSellingprice(e.target.value)}
+                />
+              </div>
+              <div className="w-2/5">
+                <NextSelectInputField
+                  label="Currency"
+                  value={currency}
+                  onChange={(e) =>
+                    handleSelectChangeEvent(e, setCurrency, currency)
+                  }
+                  optionValues={currencyOptionValues}
+                />
+              </div>
+            </div>
+            <div className="mb-6 md:mb-0 gap-4 w-full px-3 sm:w-1/3">
+              <NextTextInputField
+                label="Colour code"
+                value={colourcode}
+                onChange={(e) => setColourcode(e.target.value)}
+              />
+            </div>
+            <div className="mb-6 md:mb-0 gap-4 w-full px-3 sm:w-1/3">
+              <NextAreaTextInputField
+                label="Remark"
+                value={remark}
+                onChange={(e) => setRemark(e.target.value)}
+              />
+            </div>
           </div>
         </div>
       </div>

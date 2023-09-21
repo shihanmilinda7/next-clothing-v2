@@ -59,7 +59,7 @@ export const PoDetailTable = ({
   useEffect(() => {
     const updatedTableData = tableData.map((item) => ({
       ...item,
-      total: item.ratiopack * rationpacksizeIn + item.single,
+      total: item.ratiopack * rationpacksizeIn + 1*item.single,
     }));
 
     // Update the state with the calculated tableData
