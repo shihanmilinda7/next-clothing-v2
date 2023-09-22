@@ -50,7 +50,7 @@ export const BankDetailTable = ({
     "Branch Name",
     "Branch BIC",
     "Account No",
-    "Sort",
+    "Sort code",
     "",
   ];
 

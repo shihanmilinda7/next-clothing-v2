@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { PoDetailTableRow } from "./tablerow";
 import { AiFillPlusCircle, AiOutlineUndo } from "react-icons/ai";
+import { setPoDetailTableData } from "@/store/purchaseorder/po-slice";
 
 export const PoDetailTable = ({
   rationpacksizeIn,
@@ -59,12 +60,16 @@ export const PoDetailTable = ({
   useEffect(() => {
     const updatedTableData = tableData.map((item) => ({
       ...item,
-      total: item.ratiopack * rationpacksizeIn + 1*item.single,
+      total: item.ratiopack * rationpacksizeIn + 1 * item.single,
     }));
 
     // Update the state with the calculated tableData
     setTableData(updatedTableData);
   }, [tableUpdate, rationpacksizeIn]);
+
+  useEffect(() => {
+    dispatch(setPoDetailTableData(tableData));
+  }, [tableData]);
 
   const addRow1 = () => {
     // Generate a unique ID for the new row

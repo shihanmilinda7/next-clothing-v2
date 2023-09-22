@@ -48,6 +48,10 @@ export default function PurchaseOrder() {
     (state: any) => state.poReducer.fabricOptionValues
   );
 
+  const poDetailTableData = useSelector(
+    (state: any) => state.poReducer.poDetailTableData
+  );
+
   const shippingmodeOptionValues = [
     {
       value: "FOB",
@@ -97,6 +101,37 @@ export default function PurchaseOrder() {
     {
       value: "Closed",
       name: "Closed",
+    },
+  ];
+
+  const sampleStatusOptionValues = [
+    {
+      value: "First fit",
+      name: "First fit",
+    },
+    {
+      value: "Second fit",
+      name: "Second fit",
+    },
+    {
+      value: "Third fit",
+      name: "Third fit",
+    },
+    {
+      value: "Fourth fit",
+      name: "Fourth fit",
+    },
+    {
+      value: "Sealed",
+      name: "Sealed",
+    },
+    {
+      value: "PPS approved",
+      name: "PPS approved",
+    },
+    {
+      value: "PS approved",
+      name: "PS approved",
     },
   ];
 
@@ -157,7 +192,7 @@ export default function PurchaseOrder() {
   );
 
   const [supplierprice, setSupplierprice] = useState(
-    tmpSelPoForEdit?.supplierprice ?? ""
+    tmpSelPoForEdit?.supplierprice ?? 0
   );
   const [totalqty, setTotalqty] = useState(tmpSelPoForEdit?.totalqty ?? 0);
   const [totalvalue, setTotalvalue] = useState(
@@ -183,16 +218,36 @@ export default function PurchaseOrder() {
       : new Set([])) ?? new Set([])
   );
 
+  const [samplestatus, setSamplestatus] = useState(
+    (tmpSelPoForEdit?.samplestatus
+      ? new Set([tmpSelPoForEdit?.samplestatus.toString()])
+      : new Set([])) ?? new Set([])
+  );
+
   useEffect(() => {
     dispatch(fetchCustomerData(pathname));
     dispatch(fetchSupplierData(pathname));
     dispatch(fetchFabricData(pathname));
   }, []);
+
+  useEffect(() => {
+    const totalQty = poDetailTableData.reduce(
+      (total: any, obj: any) => total + parseInt(obj.total),
+      0
+    );
+    setTotalqty(totalQty);
+  }, [poDetailTableData]);
+
+  useEffect(() => {
+    const tmpTotalValue = supplierprice * totalqty
+    setTotalvalue(tmpTotalValue)
+  }, [totalqty, supplierprice]);
   return (
     <div className="flex ml-3 flex-col bg-slate-200 w-full">
       <span className="text-3xl font-black leading-none text-gray-900 select-none">
         Create new purchase or<span className="text-indigo-600">der</span>
       </span>
+      {JSON.stringify(poDetailTableData)}
       <div>
         <div className="w-full flex flex-col gap-4 mt-2 pb-2 pt-2 border border-gray-400 border-solid rounded-lg">
           <div className="flex flex-wrap">
@@ -338,6 +393,18 @@ export default function PurchaseOrder() {
                 label="Description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex flex-wrap">
+            <div className="mb-6 md:mb-0 gap-4 w-full px-3 sm:w-1/3">
+              <NextSelectInputField
+                label="Sample status"
+                value={samplestatus}
+                onChange={(e) =>
+                  handleSelectChangeEvent(e, setSamplestatus, samplestatus)
+                }
+                optionValues={sampleStatusOptionValues}
               />
             </div>
           </div>

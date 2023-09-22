@@ -5,18 +5,24 @@ interface poState {
   customerOptionValues: any[];
   supplierOptionValues: any[];
   fabricOptionValues: any[];
+  poDetailTableData: any[];
 }
 
 const initialState: poState = {
   customerOptionValues: [],
   supplierOptionValues: [],
   fabricOptionValues: [],
+  poDetailTableData: [],
 };
 
 const poSlice = createSlice({
   name: "po",
   initialState,
-  reducers: {},
+  reducers: {
+    setPoDetailTableData: (state, action) => {
+      state.poDetailTableData = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCustomerData.pending, (state) => {
@@ -36,5 +42,7 @@ const poSlice = createSlice({
       });
   },
 });
+
+export const { setPoDetailTableData } = poSlice.actions;
 
 export default poSlice.reducer;

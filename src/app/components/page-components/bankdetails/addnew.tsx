@@ -400,7 +400,7 @@ const NewBankDetail = ({
                 <div className="flex flex-wrap sm:flex-nowrap pr-3">
                   <div className="w-full sm:w-1/2">
                     <NextTextInputField
-                      label="Sort"
+                      label="Sort code"
                       value={sort}
                       onChange={(e) => setSort(e.target.value)}
                     />
