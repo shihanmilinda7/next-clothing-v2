@@ -8,7 +8,7 @@ import TextInputField from "@/app/components/input-fields/text-input-fields";
 import { FaSearch } from "react-icons/fa";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { useRouter } from "next/navigation";
-import { ItemTable } from "@/app/components/items/table";
+// import { ItemTable } from "@/app/components/items/table";
 import { Input, Pagination } from "@nextui-org/react";
 // import ProductSize from './components/ProductSize'
 
@@ -116,7 +116,7 @@ export default function Products() {
         {/* </div> */}
       </div>
       <div className="mt-4 w-fit">
-        <ItemTable itemRowObjects={itemRowObjects} />
+        {/* <ItemTable itemRowObjects={itemRowObjects} /> */}
         <div className="md:px-2 mt-3">
           <Pagination
             isCompact

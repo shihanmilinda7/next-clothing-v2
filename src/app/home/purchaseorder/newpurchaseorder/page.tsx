@@ -5,7 +5,7 @@ import NextTextInputField from "@/app/components/nextui-input-fields/next-text-i
 import NextTextReadOnlyInputField from "@/app/components/nextui-input-fields/next-text-readonly-input-fields";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { handleSelectChangeEvent } from "../../items/utils";
+import { handleSelectChangeEvent } from "./utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCustomerData,
@@ -15,8 +15,13 @@ import {
 import NextSelectInputField from "@/app/components/nextui-input-fields/next-select-input-fields";
 import NextNumberInputField from "@/app/components/nextui-input-fields/next-number-input-fields";
 import NextAreaTextInputField from "@/app/components/nextui-input-fields/next-textarea-input-fields";
-import { PoDetailTable } from "@/app/components/page-components/purchaseorder/table";
+import { PoDetailTable } from "@/app/components/page-components/purchaseorder/podetails-table";
 import NextNumberReadOnlyInputField from "@/app/components/nextui-input-fields/next-number-readonly-input-fields";
+import { Button, cn } from "@nextui-org/react";
+import { AiFillSave } from "react-icons/ai";
+import { GiCancel } from "react-icons/gi";
+import { toast } from "react-toastify";
+import { inputFieldValidation } from "@/app/utils/utils";
 
 export default function PurchaseOrder() {
   const router = useRouter();
@@ -50,6 +55,10 @@ export default function PurchaseOrder() {
 
   const poDetailTableData = useSelector(
     (state: any) => state.poReducer.poDetailTableData
+  );
+
+  const selPoForEdit = useSelector(
+    (state: any) => state.poReducer.selPoForEdit
   );
 
   const shippingmodeOptionValues = [
@@ -135,22 +144,23 @@ export default function PurchaseOrder() {
     },
   ];
 
-  let tmpSelPoForEdit: any;
+  let tmpSelPoForEdit: any = selPoForEdit[0];
+  let tmpSelPoDetailForEdit: any = selPoForEdit.poDetailData;
 
   const [purchaseorderid, setPurchaseorderid] = useState(
     tmpSelPoForEdit?.purchaseorderid ?? ""
   );
   const [customerid, setCustomerid] = useState(
-    (tmpSelPoForEdit?.customerid
+    tmpSelPoForEdit?.customerid
       ? new Set([tmpSelPoForEdit?.customerid.toString()])
-      : new Set([])) ?? new Set([])
+      : new Set([])
   );
   const [date, setDate] = useState(tmpSelPoForEdit?.date ?? "");
 
   const [supplierid, setSupplierid] = useState(
-    (tmpSelPoForEdit?.supplierid
+    tmpSelPoForEdit?.supplierid
       ? new Set([tmpSelPoForEdit?.supplierid.toString()])
-      : new Set([])) ?? new Set([])
+      : new Set([])
   );
   const [customerpo, setCustomerpo] = useState(
     tmpSelPoForEdit?.customerpo ?? ""
@@ -158,11 +168,13 @@ export default function PurchaseOrder() {
   const [exfactorydate, setExfactorydate] = useState(
     tmpSelPoForEdit?.exfactorydate ?? ""
   );
-
+  // console.log("selPoForEdit", selPoForEdit);
   const [shippingmode, setShippingmode] = useState(
-    (tmpSelPoForEdit?.shippingmode
-      ? new Set([tmpSelPoForEdit?.shippingmode.toString()])
-      : new Set([])) ?? new Set([])
+    tmpSelPoForEdit?.shippingmode
+      ? tmpSelPoForEdit?.shippingmode.toString() == "0"
+        ? new Set([])
+        : new Set([tmpSelPoForEdit?.shippingmode.toString()])
+      : new Set([])
   );
   const [customerstylename, setCustomerstylename] = useState(
     tmpSelPoForEdit?.customerstylename ?? ""
@@ -172,14 +184,16 @@ export default function PurchaseOrder() {
   );
 
   const [shippingmethod, setShippingmethod] = useState(
-    (tmpSelPoForEdit?.shippingmethod
-      ? new Set([tmpSelPoForEdit?.shippingmethod.toString()])
-      : new Set([])) ?? new Set([])
+    tmpSelPoForEdit?.shippingmethod
+      ? tmpSelPoForEdit?.shippingmethod.toString() == "0"
+        ? new Set([])
+        : new Set([tmpSelPoForEdit?.shippingmethod.toString()])
+      : new Set([])
   );
   const [fabricid, setFabricid] = useState(
-    (tmpSelPoForEdit?.fabricid
+    tmpSelPoForEdit?.fabricid
       ? new Set([tmpSelPoForEdit?.fabricid.toString()])
-      : new Set([])) ?? new Set([])
+      : new Set([])
   );
   const [rationpacksize, setRationpacksize] = useState(
     tmpSelPoForEdit?.rationpacksize ?? ""
@@ -200,28 +214,34 @@ export default function PurchaseOrder() {
   );
 
   const [sellingprice, setSellingprice] = useState(
-    tmpSelPoForEdit?.sellingprice ?? ""
+    tmpSelPoForEdit?.sellingprice ?? 0
   );
   const [colourcode, setColourcode] = useState(
     tmpSelPoForEdit?.colourcode ?? ""
   );
   const [remark, setRemark] = useState(tmpSelPoForEdit?.remark ?? "");
   const [currency, setCurrency] = useState(
-    (tmpSelPoForEdit?.currency
-      ? new Set([tmpSelPoForEdit?.currency.toString()])
-      : new Set(["USD"])) ?? new Set([])
+    tmpSelPoForEdit?.currency
+      ? tmpSelPoForEdit?.currency.toString() == "0"
+        ? new Set([])
+        : new Set([tmpSelPoForEdit?.currency.toString()])
+      : new Set(["USD"])
   );
 
   const [orderstatus, setOrderstatus] = useState(
-    (tmpSelPoForEdit?.orderstatus
-      ? new Set([tmpSelPoForEdit?.orderstatus.toString()])
-      : new Set([])) ?? new Set([])
+    tmpSelPoForEdit?.orderstatus
+      ? tmpSelPoForEdit?.orderstatus.toString() == "0"
+        ? new Set([])
+        : new Set([tmpSelPoForEdit?.orderstatus.toString()])
+      : new Set([])
   );
 
   const [samplestatus, setSamplestatus] = useState(
-    (tmpSelPoForEdit?.samplestatus
-      ? new Set([tmpSelPoForEdit?.samplestatus.toString()])
-      : new Set([])) ?? new Set([])
+    tmpSelPoForEdit?.samplestatus
+      ? tmpSelPoForEdit?.samplestatus.toString() == "0"
+        ? new Set([])
+        : new Set([tmpSelPoForEdit?.samplestatus.toString()])
+      : new Set([])
   );
 
   useEffect(() => {
@@ -231,7 +251,7 @@ export default function PurchaseOrder() {
   }, []);
 
   useEffect(() => {
-    const totalQty = poDetailTableData.reduce(
+    const totalQty = poDetailTableData?.reduce(
       (total: any, obj: any) => total + parseInt(obj.total),
       0
     );
@@ -239,15 +259,106 @@ export default function PurchaseOrder() {
   }, [poDetailTableData]);
 
   useEffect(() => {
-    const tmpTotalValue = supplierprice * totalqty
-    setTotalvalue(tmpTotalValue)
+    const tmpTotalValue = supplierprice * totalqty;
+    setTotalvalue(tmpTotalValue);
   }, [totalqty, supplierprice]);
+
+  const cancelEvent = () => {
+    window.location.href = "/home/purchaseorder";
+  };
+
+  const saveButtonHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (purchaseorderid) {
+      // updateItem();
+    } else {
+      savePo();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
+
+  const handleKeyPress = async (event: any) => {
+    // if (event.key === "F2" || event.keyCode === 113) {
+    //   await saveButtonHandler(event);
+    // } else if (event.key === "Escape" || event.keyCode === 27) {
+    //   cancelEvent();
+    // }
+  };
+
+  const savePo = async () => {
+    const validation = inputFieldValidation({});
+    if (validation == 0) {
+      const response = await fetch(pathname + "/api/purchaseorder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customerid: customerid.values().next().value ?? 0,
+          date,
+          supplierid: supplierid.values().next().value ?? 0,
+          customerpo,
+          exfactorydate,
+          shippingmode: shippingmode.values().next().value ?? "0",
+          customerstylename,
+          department,
+          shippingmethod: shippingmethod.values().next().value ?? "0",
+          fabricid: fabricid.values().next().value ?? 0,
+          rationpacksize,
+          style,
+          colour,
+          description,
+          supplierprice,
+          sellingprice,
+          colourcode,
+          remark,
+          currency: currency.values().next().value ?? "0",
+          orderstatus: orderstatus.values().next().value ?? "0",
+          samplestatus: samplestatus.values().next().value ?? "0",
+          poDetailTableData,
+        }),
+      });
+      const res = await response.json();
+      if (res == "SUCCESS") {
+        toast.success(`Purchase order created successfully!`, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        router.push("/home/purchaseorder");
+      } else {
+        toast.error("Error!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+
+      return res;
+    }
+  };
+
   return (
     <div className="flex ml-3 flex-col bg-slate-200 w-full">
       <span className="text-3xl font-black leading-none text-gray-900 select-none">
         Create new purchase or<span className="text-indigo-600">der</span>
       </span>
-      {JSON.stringify(poDetailTableData)}
+      v- {JSON.stringify(poDetailTableData)}
       <div>
         <div className="w-full flex flex-col gap-4 mt-2 pb-2 pt-2 border border-gray-400 border-solid rounded-lg">
           <div className="flex flex-wrap">
@@ -415,7 +526,10 @@ export default function PurchaseOrder() {
                 PO details
               </span>
             </div>
-            <PoDetailTable rationpacksizeIn={rationpacksize} />
+            <PoDetailTable
+              rationpacksizeIn={rationpacksize}
+              poDetailsRowsIn={tmpSelPoDetailForEdit}
+            />
           </div>
 
           <div className="flex flex-wrap">
@@ -499,6 +613,28 @@ export default function PurchaseOrder() {
                 value={remark}
                 onChange={(e) => setRemark(e.target.value)}
               />
+            </div>
+          </div>
+          <div className="w-full flex flex-col gap-4 mt-2 px-3 mb-1">
+            <div className="flex flex-wrap">
+              <div className="px-1">
+                <Button
+                  color="primary"
+                  startContent={<AiFillSave />}
+                  onClick={saveButtonHandler}
+                >
+                  Save
+                </Button>
+              </div>
+              <div>
+                <Button
+                  color="default"
+                  startContent={<GiCancel />}
+                  onClick={cancelEvent}
+                >
+                  Cancel
+                </Button>
+              </div>
             </div>
           </div>
         </div>

@@ -64,53 +64,36 @@ model bankdetails{
   sort String   
 }
 
-model categories{
-  categoryid       Int      @id @default(autoincrement())
-  categoryname String   
+model purchaseorders{
+  purchaseorderid       Int      @id @default(autoincrement())
+  customerid Int   
+  date String   
+  supplierid Int   
+  customerpo String   
+  exfactorydate String   
+  shippingmode String   
+  customerstylename String   
+  department String   
+  shippingmethod String   
+  fabricid Int   
+  rationpacksize String   
+  style String   
+  colour String   
+  description String   
+  supplierprice Int   
+  sellingprice Int   
+  colourcode String   
+  remark String   
+  currency String   
+  orderstatus String   
+  samplestatus String   
 }
 
-model subcategories{
-  subcategoryid       Int      @id @default(autoincrement())
-  categoryid Int
-  subcategoryname String   
-}
-
-model brands{
-  brandid       Int      @id @default(autoincrement())
-  brandname String   
-}
-
-model units{
-  unitid       Int      @id @default(autoincrement())
-  unit String   
-}
-
-model items{
-  itemcode       Int      @id @default(autoincrement())
-  extraitemcode String   
-  barcode String   
-  itemname String   
-  category Int   
-  subcategory Int   
-  brand Int   
-  retailsalesprice String
-  retailautosalesprice Boolean
-  retailpricechange Boolean
-  retailmarkup String
-  smallwholesalesprice String
-  smallwholeautosalesprice Boolean
-  smallwholepricechange Boolean
-  smallwholemarkup String
-  largewholesalesprice String
-  largewholeautosalesprice Boolean
-  largewholepricechange Boolean
-  largewholemarkup String 
-  cost String   
-  stockcontrol Boolean   
-  currentstock String   
-  stocklimit String   
-  unit String   
-  netweight String   
-  grossweight String   
-  location String   
+model purchaseorderdetails{
+  purchaseorderdetailid       Int      @id @default(autoincrement())
+  purchaseorderid Int   
+  rowindex Int   
+  size String   
+  ratiopack Int   
+  single Int   
 }

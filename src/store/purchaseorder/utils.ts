@@ -44,3 +44,20 @@ export const fetchFabricData: any = createAsyncThunk(
     return optionArray;
   }
 );
+
+export const fetchSelPoDataForEdit: any = createAsyncThunk(
+  "po/fetchSelPoDataForEdit",
+  async (params: { apiUrl: string; purchaseorderid: any }) => {
+    const { apiUrl, purchaseorderid } = params;
+
+    const response = await fetch(
+      `${apiUrl}/api/purchaseorder/get-selected-po?purchaseorderid=${purchaseorderid}`
+    );
+    const res = await response.json();
+    console.log("poDetailData", res);
+    let tmpPoData = res.poData;
+    let tmpPoDetailData = res.poDetailData;
+    tmpPoData.poDetailData = tmpPoDetailData;
+    return tmpPoData;
+  }
+);

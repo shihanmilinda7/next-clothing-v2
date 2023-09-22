@@ -1,11 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCustomerData, fetchFabricData, fetchSupplierData } from "./utils";
+import {
+  fetchCustomerData,
+  fetchFabricData,
+  fetchSelPoDataForEdit,
+  fetchSupplierData,
+} from "./utils";
 
 interface poState {
   customerOptionValues: any[];
   supplierOptionValues: any[];
   fabricOptionValues: any[];
   poDetailTableData: any[];
+  selPoForEdit: any[];
 }
 
 const initialState: poState = {
@@ -13,6 +19,7 @@ const initialState: poState = {
   supplierOptionValues: [],
   fabricOptionValues: [],
   poDetailTableData: [],
+  selPoForEdit: [],
 };
 
 const poSlice = createSlice({
@@ -39,6 +46,10 @@ const poSlice = createSlice({
       })
       .addCase(fetchFabricData.fulfilled, (state, action) => {
         state.fabricOptionValues = action.payload;
+      })
+      .addCase(fetchSelPoDataForEdit.fulfilled, (state, action) => {
+        state.selPoForEdit = action.payload;
+        // console.log("selPoForEdit", action.payload);
       });
   },
 });

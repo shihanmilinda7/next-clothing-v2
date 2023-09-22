@@ -1,7 +1,6 @@
 "use client";
 
 import { toast } from "react-toastify";
-import { deleteItem } from "@/app/home/items/utils";
 import {
   Button,
   Table,

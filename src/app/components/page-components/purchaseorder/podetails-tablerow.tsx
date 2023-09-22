@@ -44,7 +44,7 @@ export const PoDetailTableRow = ({
         </Button>
       </td>
       <td className="text-center py-1 px-4">{index}</td>
-      <td className="text-center py-1 px-4">{tableRow.id}</td>
+      <td className="text-center py-1 px-4">{tableRow.rowindex}</td>
       <td className="text-center py-1 px-4">
         <input
           id="size"

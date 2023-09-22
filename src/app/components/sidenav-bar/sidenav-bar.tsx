@@ -12,7 +12,6 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { Button } from "@nextui-org/react";
 import { useDispatch } from "react-redux";
-import { fetchSelItemDataForEdit } from "@/store/items/utils";
 import { BiPurchaseTagAlt } from "react-icons/bi";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { BsBank } from "react-icons/bs";
@@ -97,8 +96,6 @@ const SideNavbar = () => {
         window.location.href = "/home/fabrics";
         break;
       case "/home/products":
-        dispatch(fetchSelItemDataForEdit({ apiUrl: pathname, itemcode: 0 }));
-        // router.push("/home/products");
         window.location.href = "/home/products";
         break;
       case "/home/customers":

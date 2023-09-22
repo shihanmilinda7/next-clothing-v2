@@ -2,8 +2,12 @@
 
 import NewFabric from "@/app/components/page-components/fabrics/addnew";
 import { FabricTable } from "@/app/components/page-components/fabrics/table";
+// import PoPrintingTemplate from "@/app/components/page-components/purchaseorder/po-printing-temp";
+import { PoTable } from "@/app/components/page-components/purchaseorder/table";
+import { Input, Pagination } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 
 export default function PurchaseOrder() {
   const router = useRouter();
@@ -22,6 +26,11 @@ export default function PurchaseOrder() {
     }
   }
 
+  const [search, setSearch] = useState("");
+  const [poRowObjects, setPoRowObjects] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPoCount, setTotalPoCount] = useState(1);
+
   useEffect(() => {
     window.addEventListener("keydown", handleKeyPress);
 
@@ -36,27 +45,88 @@ export default function PurchaseOrder() {
     }
   };
 
+  useEffect(() => {
+    getAllPoDetails();
+  }, [currentPage, search]);
+
   const createNewPo = () => {
     router.push("/home/purchaseorder/newpurchaseorder");
   };
+
+  const getAllPoDetails = async () => {
+    const fetchData = async () => {
+      setSearch(search.trim());
+      const reponse = await fetch(
+        pathname +
+          "/api/purchaseorder?currentPage=" +
+          currentPage +
+          "&searchValue=" +
+          (search ? search : "-1")
+      );
+      const res = await reponse.json();
+      setPoRowObjects(res.poData);
+
+      const tmpCount = Math.ceil(res.poCount / 10);
+      setTotalPoCount(tmpCount);
+      console.log("res.items", res.poData);
+    };
+
+    // call the function
+    await fetchData().catch(console.error);
+    // const tmpCount = Math.ceil(res.itemCount / 10);
+    // setTotalItemCount(tmpCount);
+  };
+  // const handlePrint = () => {
+  //   window.print();
+  // };
   return (
     <div className="flex ml-3 flex-col bg-slate-200 w-full">
       <span className="text-3xl font-black leading-none text-gray-900 select-none">
         Purchase or<span className="text-indigo-600">der</span>
       </span>
-      <div className="justify-end w-full flex mt-3">
-        <button
-          onClick={createNewPo}
-          className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-        >
-          Create New - F2
-        </button>
+      {/* <button onClick={handlePrint}>Print</button> */}
+      <div className="flex w-full m-1">
+        <div className="w-full flex items-center mt-4 sm:w-1/2">
+          <Input
+            autoFocus
+            isClearable
+            startContent={
+              <FaSearch className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+            }
+            color="primary"
+            label="Search"
+            placeholder="Type to search..."
+            variant="flat"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onClear={() => setSearch("")}
+          />
+        </div>
+        <div className="justify-end w-full mt-3 flex items-center mr-3">
+          <button
+            onClick={createNewPo}
+            className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+          >
+            Create New - F2
+          </button>
+        </div>
       </div>
       <div className="flex w-full mt-3 item-center justify-center">
-        {/* <FabricTable
-          fabricRowData={fabricRowData}
-          setReloadTable={toggleReloadTable}
-        /> */}
+        <div className="flex flex-col w-full">
+          <PoTable poRowObjects={poRowObjects} />
+          <div className="md:px-2 mt-3">
+            <Pagination
+              isCompact
+              showControls
+              total={totalPoCount}
+              page={currentPage}
+              onChange={setCurrentPage}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col w-full mt-3 item-center justify-center">
+        {/* <PoPrintingTemplate /> */}
       </div>
     </div>
   );
