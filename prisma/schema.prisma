@@ -87,6 +87,8 @@ model purchaseorders{
   currency String   
   orderstatus String   
   samplestatus String   
+  totalqty Int  @default(0) 
+  totalvalue Int @default(0)   
 }
 
 model purchaseorderdetails{

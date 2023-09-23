@@ -2,12 +2,15 @@
 
 import NewFabric from "@/app/components/page-components/fabrics/addnew";
 import { FabricTable } from "@/app/components/page-components/fabrics/table";
+import PoExcelPage from "@/app/components/page-components/purchaseorder/po-excel-module";
+import TableTranspose from "@/app/components/page-components/purchaseorder/sample";
 // import PoPrintingTemplate from "@/app/components/page-components/purchaseorder/po-printing-temp";
 import { PoTable } from "@/app/components/page-components/purchaseorder/table";
-import { Input, Pagination } from "@nextui-org/react";
+import { Button, Input, Pagination } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { VscNewFile } from "react-icons/vsc";
 
 export default function PurchaseOrder() {
   const router = useRouter();
@@ -79,6 +82,11 @@ export default function PurchaseOrder() {
   // const handlePrint = () => {
   //   window.print();
   // };
+  const originalData = [
+    { name: 'A', age: 25, city: 'New York' },
+    { name: 'B', age: 30, city: 'Los Angeles' },
+    { name: 'C', age: 22, city: 'Chicago' },
+  ];
   return (
     <div className="flex ml-3 flex-col bg-slate-200 w-full">
       <span className="text-3xl font-black leading-none text-gray-900 select-none">
@@ -102,18 +110,34 @@ export default function PurchaseOrder() {
             onClear={() => setSearch("")}
           />
         </div>
-        <div className="justify-end w-full mt-3 flex items-center mr-3">
+        <div className="justify-end w-full mt-3 flex items-center mr-3 gap-1">
+          <PoExcelPage poRowObjectsIn={poRowObjects} />
+          {/* <button
+            onClick={createNewPo}
+            className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+          >
+            Create New - F2
+          </button> */}
+          <Button
+            color="primary"
+            onClick={createNewPo}
+            startContent={<VscNewFile />}
+          >
+            Create New - F2
+          </Button>
+        </div>
+        {/* <div className="justify-end w-full mt-3 flex items-center mr-3">
           <button
             onClick={createNewPo}
             className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
           >
             Create New - F2
           </button>
-        </div>
+        </div> */}
       </div>
       <div className="flex w-full mt-3 item-center justify-center">
         <div className="flex flex-col w-full">
-          <PoTable poRowObjects={poRowObjects } />
+          <PoTable poRowObjects={poRowObjects} />
           <div className="md:px-2 mt-3">
             <Pagination
               isCompact
@@ -126,7 +150,7 @@ export default function PurchaseOrder() {
         </div>
       </div>
       <div className="flex flex-col w-full mt-3 item-center justify-center">
-        {/* <PoPrintingTemplate /> */}
+        {/* <TableTranspose data={originalData} /> */}
       </div>
     </div>
   );

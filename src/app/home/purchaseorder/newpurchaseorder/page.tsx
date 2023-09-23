@@ -30,6 +30,8 @@ import {
   setAddnewBaseinfoIdPo,
   setAddnewBaseinfoTypePo,
 } from "@/store/purchaseorder/po-slice";
+import { VscNewFile } from "react-icons/vsc";
+import PoPrintableComponent from "@/app/components/page-components/purchaseorder/po-printing-module";
 
 export default function PurchaseOrder() {
   const router = useRouter();
@@ -364,10 +366,13 @@ export default function PurchaseOrder() {
           orderstatus: orderstatus.values().next().value ?? "0",
           samplestatus: samplestatus.values().next().value ?? "0",
           poDetailTableData,
+          totalqty,
+          totalvalue,
         }),
       });
       const res = await response.json();
       if (res == "SUCCESS") {
+        console.log("=====================================");
         toast.success(`Purchase order created successfully!`, {
           position: "top-right",
           autoClose: 2000,
@@ -426,6 +431,8 @@ export default function PurchaseOrder() {
           currency: currency.values().next().value ?? "0",
           orderstatus: orderstatus.values().next().value ?? "0",
           samplestatus: samplestatus.values().next().value ?? "0",
+          totalqty,
+          totalvalue,
           poDetailTableData,
         }),
       });
@@ -500,13 +507,15 @@ export default function PurchaseOrder() {
       <span className="text-3xl font-black leading-none text-gray-900 select-none">
         Create new purchase or<span className="text-indigo-600">der</span>
       </span>
-      <div className="justify-end w-full mt-3 flex items-center mr-3">
-        <button
+      <div className="justify-end w-full mt-3 flex items-center mr-3 gap-2">
+        {purchaseorderid ? <PoPrintableComponent poDataForPrint = {selPoForEdit}/> : null}
+        <Button
+          color="primary"
           onClick={newPoScreen}
-          className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+          startContent={<VscNewFile />}
         >
-          Create New Po
-        </button>
+          Create New
+        </Button>
       </div>
       {/* v- {JSON.stringify(poDetailTableData)} */}
       <div>

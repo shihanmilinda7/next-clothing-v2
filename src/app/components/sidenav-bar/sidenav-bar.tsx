@@ -39,7 +39,7 @@ const SideNavbar = () => {
 
   const menus = [
     { name: "POs", link: "/home/purchaseorder", icon: BiPurchaseTagAlt },
-    { name: "Invoice", link: "/home/sales", icon: LiaFileInvoiceDollarSolid },
+    // { name: "Invoice", link: "/home/sales", icon: LiaFileInvoiceDollarSolid },
     {
       name: "Customers",
       link: "/home/customers",
@@ -49,8 +49,8 @@ const SideNavbar = () => {
     { name: "Suppliers", link: "/home/suppliers", icon: MdOutlineFireTruck },
     { name: "Bank Accounts", link: "/home/bankdetails", icon: BsBank },
     { name: "Fabrics", link: "/home/fabrics", icon: GiRolledCloth },
-    { name: "Reports", link: "/", icon: TbReportAnalytics, margin: true },
-    { name: "Setting", link: "/", icon: RiSettings4Line },
+    // { name: "Reports", link: "/", icon: TbReportAnalytics, margin: true },
+    // { name: "Setting", link: "/", icon: RiSettings4Line },
   ];
 
   // const handleSignOut = async (e: React.MouseEvent<HTMLButtonElement>) => {

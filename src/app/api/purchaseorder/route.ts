@@ -69,6 +69,8 @@ export async function POST(request: Request) {
     currency,
     orderstatus,
     samplestatus,
+    totalqty,
+    totalvalue,
     poDetailTableData,
   } = await request.json();
   let message: string = "SUCCESS";
@@ -98,6 +100,8 @@ export async function POST(request: Request) {
           currency,
           orderstatus,
           samplestatus,
+          totalqty: parseInt(totalqty),
+          totalvalue: parseInt(totalvalue),
         },
       });
 
@@ -155,6 +159,8 @@ export async function PUT(request: Request) {
     currency,
     orderstatus,
     samplestatus,
+    totalqty,
+    totalvalue,
     poDetailTableData,
   } = await request.json();
   let message: string = "SUCCESS";
@@ -185,6 +191,8 @@ export async function PUT(request: Request) {
           currency,
           orderstatus,
           samplestatus,
+          totalqty: parseInt(totalqty),
+          totalvalue: parseInt(totalvalue),
         },
       });
 
