@@ -1,8 +1,8 @@
 "use client";
 
 import { ToastContainer } from "react-toastify";
-import TopNavbar from "./components/navbar";
-import { ThemeSwitcher } from "./components/theme-switcher";
+// import TopNavbar from "./components/navbar";
+// import { ThemeSwitcher } from "./components/theme-switcher";
 // import { Provider } from "react-redux";
 import { AuthProvider } from "./providers/auth/auth-provider";
 // import { ToastContainer } from "react-toastify";

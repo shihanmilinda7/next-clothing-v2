@@ -14,7 +14,7 @@ export async function GET(request: Request) {
 
     res = { message: "SUCCESS", fabricData };
   } catch (error) {
-    console.error("Error category:", error);
+    console.error("Error fabric:", error);
     res = { message: "FAIL" };
   }
 
@@ -23,23 +23,23 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const { fabricname } = await request.json();
-  let message: string = "SUCCESS";
+  let res: any;
   try {
     await prisma.$transaction(async (tx) => {
       // 1. addnew category for geader table.
-      const newFabrics = await tx.fabrics.create({
+      const newFabric = await tx.fabrics.create({
         data: {
           fabricname,
         },
       });
-
+      res = { message: "SUCCESS", newFabric };
       return "";
     });
   } catch (error) {
     console.error("Error adding new Fabric item", error);
-    message = "FAIL";
+    res = { message: "FAIL" };
   }
-  return NextResponse.json(message);
+  return NextResponse.json(res);
 }
 
 export async function PUT(request: Request) {

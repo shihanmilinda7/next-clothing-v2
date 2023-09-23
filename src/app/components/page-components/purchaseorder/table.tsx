@@ -16,6 +16,7 @@ import { MdOutlineEditNote } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { fetchSelPoDataForEdit } from "@/store/purchaseorder/utils";
+import { handleDelete } from "@/app/home/purchaseorder/newpurchaseorder/utils";
 
 export const PoTable = ({ poRowObjects }: { poRowObjects: any[] }) => {
   let pathname: string = "";
@@ -66,9 +67,10 @@ export const PoTable = ({ poRowObjects }: { poRowObjects: any[] }) => {
     dispatch(fetchSelPoDataForEdit({ apiUrl: pathname, purchaseorderid }));
     router.push("/home/purchaseorder/newpurchaseorder");
   };
-  // const handleDelete = async (itemcode: any) => {
+
+  // const handleDelete = async (purchaseorderid: any) => {
   //   // Display a toast notification with a confirmation message.
-  //   toast.warning("Are you sure you want to delete this item?", {
+  //   toast.warning("Are you sure you want to delete this Po?", {
   //     position: toast.POSITION.TOP_CENTER,
   //     autoClose: false, // This ensures the notification doesn't auto-close
   //     closeOnClick: false, // This prevents the notification from closing when clicked
@@ -76,7 +78,7 @@ export const PoTable = ({ poRowObjects }: { poRowObjects: any[] }) => {
   //       <div>
   //         <Button
   //           color="default"
-  //           onClick={() => confirmDelete(itemcode)}
+  //           onClick={() => confirmDelete(purchaseorderid)}
   //           className="mb-1"
   //         >
   //           Yes
@@ -94,8 +96,8 @@ export const PoTable = ({ poRowObjects }: { poRowObjects: any[] }) => {
   //   });
   // };
 
-  // const confirmDelete = async (itemcode: any) => {
-  //   await deleteItem(pathname, itemcode);
+  // const confirmDelete = async (purchaseorderid: any) => {
+  //   await deletePo(pathname, purchaseorderid);
   //   toast.dismiss();
   //   // router.push("/home/products");
   // };
@@ -112,11 +114,11 @@ export const PoTable = ({ poRowObjects }: { poRowObjects: any[] }) => {
             {poRowObjects?.map((tableRow: any, index: number) => (
               <TableRow key={tableRow.fabricid} className="bg-purple-gray-300">
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{tableRow.customername}</TableCell>
-                <TableCell>{tableRow.suppliername}</TableCell>
-                <TableCell>{tableRow.orderstatus}</TableCell>
-                <TableCell>{tableRow.customerpo}</TableCell>
-                <TableCell>{tableRow.style}</TableCell>
+                <TableCell>{tableRow.customername ? tableRow.customername : "-"}</TableCell>
+                <TableCell>{tableRow.suppliername ? tableRow.suppliername : "-"}</TableCell>
+                <TableCell>{tableRow.orderstatus != "0" ? tableRow.orderstatus : "-" }</TableCell>
+                <TableCell>{tableRow.customerpo? tableRow.customerpo : "-"}</TableCell>
+                <TableCell>{tableRow.style? tableRow.style : "-"}</TableCell>
                 <TableCell>
                   <div className="flex gap-1">
                     <Button
@@ -137,7 +139,9 @@ export const PoTable = ({ poRowObjects }: { poRowObjects: any[] }) => {
                       aria-label="Create Item"
                     >
                       <RiDeleteBin5Line
-                        // onClick={() => handleDelete(tableRow.fabricid)}
+                        onClick={() =>
+                          handleDelete(pathname, tableRow.purchaseorderid)
+                        }
                         className="inline-block h-6 w-6 text-red-700 hover:text-red-500 cursor-pointer"
                       />
                     </Button>

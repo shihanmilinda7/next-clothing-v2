@@ -24,11 +24,12 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const { customercode, customername, email, phone, address } =
     await request.json();
-  let message: string = "SUCCESS";
+  let res: any;
+
   try {
     await prisma.$transaction(async (tx) => {
       // 1. addnew category for geader table.
-      const newFabrics = await tx.customers.create({
+      const newCustomer = await tx.customers.create({
         data: {
           customercode,
           customername,
@@ -37,14 +38,15 @@ export async function POST(request: Request) {
           address,
         },
       });
+      res = { message: "SUCCESS", newCustomer };
 
       return "";
     });
   } catch (error) {
     console.error("Error adding new Customer", error);
-    message = "FAIL";
+    res = { message: "FAIL" };
   }
-  return NextResponse.json(message);
+  return NextResponse.json(res);
 }
 
 export async function PUT(request: Request) {

@@ -5,7 +5,7 @@ import NextTextInputField from "@/app/components/nextui-input-fields/next-text-i
 import NextTextReadOnlyInputField from "@/app/components/nextui-input-fields/next-text-readonly-input-fields";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { handleSelectChangeEvent } from "./utils";
+import { handleDelete, handleSelectChangeEvent } from "./utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCustomerData,
@@ -22,6 +22,14 @@ import { AiFillSave } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 import { toast } from "react-toastify";
 import { inputFieldValidation } from "@/app/utils/utils";
+import { ImBin } from "react-icons/im";
+import NewCustomer from "@/app/components/page-components/customers/addnew";
+import NewFabric from "@/app/components/page-components/fabrics/addnew";
+import NewSupplier from "@/app/components/page-components/suppliers/addnew";
+import {
+  setAddnewBaseinfoIdPo,
+  setAddnewBaseinfoTypePo,
+} from "@/store/purchaseorder/po-slice";
 
 export default function PurchaseOrder() {
   const router = useRouter();
@@ -59,6 +67,14 @@ export default function PurchaseOrder() {
 
   const selPoForEdit = useSelector(
     (state: any) => state.poReducer.selPoForEdit
+  );
+
+  const addnewBaseinfoTypePo = useSelector(
+    (state: any) => state.poReducer.addnewBaseinfoTypePo
+  );
+
+  const addnewBaseinfoIdPo = useSelector(
+    (state: any) => state.poReducer.addnewBaseinfoIdPo
   );
 
   const shippingmodeOptionValues = [
@@ -251,10 +267,35 @@ export default function PurchaseOrder() {
   }, []);
 
   useEffect(() => {
-    const totalQty = poDetailTableData?.reduce(
-      (total: any, obj: any) => total + parseInt(obj.total),
-      0
-    );
+    switch (addnewBaseinfoTypePo) {
+      case "Customer":
+        dispatch(fetchCustomerData(pathname));
+        setCustomerid(new Set([addnewBaseinfoIdPo.toString()]));
+        break;
+      case "Supplier":
+        dispatch(fetchSupplierData(pathname));
+        setSupplierid(new Set([addnewBaseinfoIdPo.toString()]));
+        break;
+      case "Fabric":
+        dispatch(fetchFabricData(pathname));
+        setFabricid(new Set([addnewBaseinfoIdPo.toString()]));
+        break;
+      default:
+        "";
+    }
+  }, [addnewBaseinfoIdPo]);
+
+  useEffect(() => {
+    const totalQty = poDetailTableData?.reduce((total: any, obj: any) => {
+      if (obj.rowstatus !== "r" && obj.rowstatus !== "d") {
+        return total + parseInt(obj.total);
+      }
+      return total; // Ignore the calculation when rowstatus is 'r' or 'd'
+    }, 0);
+    // const totalQty = poDetailTableData?.reduce(
+    //   (total: any, obj: any) => total + parseInt(obj.total),
+    //   0
+    // );
     setTotalqty(totalQty);
   }, [poDetailTableData]);
 
@@ -274,6 +315,8 @@ export default function PurchaseOrder() {
     } else {
       addnewPo();
     }
+    dispatch(setAddnewBaseinfoTypePo(""));
+    dispatch(setAddnewBaseinfoIdPo(""));
   };
 
   useEffect(() => {
@@ -335,7 +378,8 @@ export default function PurchaseOrder() {
           progress: undefined,
           theme: "light",
         });
-        router.push("/home/purchaseorder");
+        window.location.href = "/home/purchaseorder";
+        // router.push("/home/purchaseorder");
       } else {
         toast.error("Error!", {
           position: "top-right",
@@ -397,7 +441,8 @@ export default function PurchaseOrder() {
           progress: undefined,
           theme: "light",
         });
-        router.push("/home/purchaseorder");
+        window.location.href = "/home/purchaseorder";
+        // router.push("/home/purchaseorder");
       } else {
         toast.error("Error!", {
           position: "top-right",
@@ -415,12 +460,55 @@ export default function PurchaseOrder() {
     }
   };
 
+  const newPoScreen = async () => {
+    // Display a toast notification with a confirmation message.
+    toast.warning("Are you sure you want to create new Po?", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: false, // This ensures the notification doesn't auto-close
+      closeOnClick: false, // This prevents the notification from closing when clicked
+      closeButton: (
+        <div>
+          <Button
+            color="default"
+            onClick={() => createNewPo()}
+            className="mb-1"
+          >
+            Yes
+          </Button>
+          <Button
+            color="danger"
+            onClick={() => {
+              toast.dismiss();
+            }}
+          >
+            No
+          </Button>
+        </div>
+      ),
+    });
+  };
+
+  const createNewPo = () => {
+    dispatch(setAddnewBaseinfoTypePo(""));
+    dispatch(setAddnewBaseinfoIdPo(""));
+    window.location.href = pathname + "/home/purchaseorder/newpurchaseorder";
+    toast.dismiss();
+  };
+
   return (
     <div className="flex ml-3 flex-col bg-slate-200 w-full">
       <span className="text-3xl font-black leading-none text-gray-900 select-none">
         Create new purchase or<span className="text-indigo-600">der</span>
       </span>
-      v- {JSON.stringify(poDetailTableData)}
+      <div className="justify-end w-full mt-3 flex items-center mr-3">
+        <button
+          onClick={newPoScreen}
+          className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+        >
+          Create New Po
+        </button>
+      </div>
+      {/* v- {JSON.stringify(poDetailTableData)} */}
       <div>
         <div className="w-full flex flex-col gap-4 mt-2 pb-2 pt-2 border border-gray-400 border-solid rounded-lg">
           <div className="flex flex-wrap">
@@ -443,7 +531,8 @@ export default function PurchaseOrder() {
                 />
               </div>
             </div>
-            <div className="mb-6 md:mb-0 gap-4 w-full px-3 sm:w-1/3">
+            <div className="mb-6 md:mb-0 w-full pr-3 sm:w-1/3 flex items-center justify-center">
+              <NewCustomer type="new" addnewFromOutside={true} />
               <NextSelectInputField
                 label="Customer"
                 value={customerid}
@@ -463,7 +552,8 @@ export default function PurchaseOrder() {
           </div>
 
           <div className="flex flex-wrap">
-            <div className="mb-6 md:mb-0 gap-4 w-full px-3 sm:w-1/3">
+            <div className="mb-6 md:mb-0 w-full pr-3 sm:w-1/3 flex items-center justify-center">
+              <NewSupplier type="new" addnewFromOutside={true} />
               <NextSelectInputField
                 label="Supplier"
                 value={supplierid}
@@ -527,7 +617,8 @@ export default function PurchaseOrder() {
                 optionValues={shippingmethodOptionValues}
               />
             </div>
-            <div className="mb-6 md:mb-0 gap-4 w-full px-3 sm:w-1/3">
+            <div className="mb-6 md:mb-0 w-full pr-3 sm:w-1/3 flex items-center justify-center">
+              <NewFabric type="new" addnewFromOutside={true} />
               <NextSelectInputField
                 label="Fabric"
                 value={fabricid}
@@ -695,6 +786,15 @@ export default function PurchaseOrder() {
                   onClick={cancelEvent}
                 >
                   Cancel
+                </Button>
+              </div>
+              <div className={purchaseorderid ? "ml-auto" : "hidden"}>
+                <Button
+                  color="danger"
+                  startContent={<ImBin />}
+                  onClick={() => handleDelete(pathname, purchaseorderid)}
+                >
+                  Delete
                 </Button>
               </div>
             </div>

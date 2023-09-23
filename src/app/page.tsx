@@ -2,7 +2,7 @@
 import Image from "next/image";
 
 // import SideNavbar from "./components/side-navbar";
-import HomePage from "./components/homepage/home-page";
+// import HomePage from "./components/homepage/home-page";
 import { toast } from "react-toastify";
 import LoginPage from "./components/login/login-ui";
 

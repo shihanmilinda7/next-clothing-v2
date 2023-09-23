@@ -110,15 +110,17 @@ export async function POST(request: Request) {
       const headerId: number = newPo.purchaseorderid;
       for (let i = 0; i < poDetailTableData.length; i++) {
         const element = poDetailTableData[i];
-        await tx.purchaseorderdetails.create({
-          data: {
-            purchaseorderid: headerId,
-            rowindex: i + 1,
-            size: element.size,
-            ratiopack: parseInt(element.ratiopack),
-            single: parseInt(element.single),
-          },
-        });
+        if (element.rowstatus != "r") {
+          await tx.purchaseorderdetails.create({
+            data: {
+              purchaseorderid: headerId,
+              rowindex: i + 1,
+              size: element.size,
+              ratiopack: parseInt(element.ratiopack),
+              single: parseInt(element.single),
+            },
+          });
+        }
       }
       return "";
     });
@@ -158,8 +160,7 @@ export async function PUT(request: Request) {
   let message: string = "SUCCESS";
   try {
     await prisma.$transaction(async (tx) => {
-
-      // 1. addnew purchaseorder.
+      // 1. update purchaseorder.
       const newPo = await tx.purchaseorders.updateMany({
         where: { purchaseorderid: parseInt(purchaseorderid) },
         data: {
@@ -187,52 +188,71 @@ export async function PUT(request: Request) {
         },
       });
 
-      // 2. Verify purchaseorder enterd
-      // if (!newPo.purchaseorderid) {
-      //   throw new Error(`PO not enterd`);
-      // }
+      // 3. update purchaseorder details for geader table.
+      for (let i = 0; i < poDetailTableData.length; i++) {
+        const element = poDetailTableData[i];
 
-      // // 3. addnew purchaseorder details for geader table.
-      // const headerId: number = newPo.purchaseorderid;
-      // for (let i = 0; i < poDetailTableData.length; i++) {
-      //   const element = poDetailTableData[i];
-      //   await tx.purchaseorderdetails.create({
-      //     data: {
-      //       purchaseorderid: headerId,
-      //       rowindex: i + 1,
-      //       size: element.size,
-      //       ratiopack: parseInt(element.ratiopack),
-      //       single: parseInt(element.single),
-      //     },
-      //   });
-      // }
+        if (element.rowstatus == "u") {
+          await tx.purchaseorderdetails.updateMany({
+            where: {
+              purchaseorderdetailid: parseInt(element.purchaseorderdetailid),
+            },
+            data: {
+              rowindex: i + 1,
+              size: element.size,
+              ratiopack: parseInt(element.ratiopack),
+              single: parseInt(element.single),
+            },
+          });
+        } else if (element.rowstatus == "a") {
+          await tx.purchaseorderdetails.create({
+            data: {
+              purchaseorderid: purchaseorderid,
+              rowindex: i + 1,
+              size: element.size,
+              ratiopack: parseInt(element.ratiopack),
+              single: parseInt(element.single),
+            },
+          });
+        } else if (element.rowstatus == "d") {
+          await tx.purchaseorderdetails.delete({
+            where: {
+              purchaseorderdetailid: parseInt(element.purchaseorderdetailid),
+            },
+          });
+        }
+      }
       return "";
     });
   } catch (error) {
-    console.error("Error adding new purchase order:", error);
+    console.error("Error updating purchase order:", error);
     message = "FAIL";
   }
   return NextResponse.json(message);
 }
 
 export async function DELETE(request: Request) {
-  const { supplierid } = await request.json();
+  const { purchaseorderid } = await request.json();
 
   let message: string = "SUCCESS";
 
   try {
     await prisma.$transaction(async (tx) => {
       // 1. delete category.
-      await tx.suppliers.delete({
+      await tx.purchaseorders.delete({
         where: {
-          supplierid,
+          purchaseorderid: parseInt(purchaseorderid),
         },
       });
-
+      await tx.purchaseorderdetails.deleteMany({
+        where: {
+          purchaseorderid: parseInt(purchaseorderid),
+        },
+      });
       return "";
     });
   } catch (error) {
-    console.error("Error deleting Supplier", error);
+    console.error("Error deleting purchase order", error);
     message = "FAIL";
   }
 

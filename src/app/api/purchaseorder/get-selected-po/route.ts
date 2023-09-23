@@ -17,6 +17,9 @@ export async function GET(request: Request) {
         where: {
           purchaseorderid: parseInt(purchaseorderid),
         },
+        orderBy: {
+          rowindex: "asc", // Replace 'yourPropertyName' with the actual property name
+        },
       });
 
       // poData["poDetailData"] = poDetailData;

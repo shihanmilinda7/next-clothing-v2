@@ -412,7 +412,7 @@ const NewBankDetail = ({
               <div className="">
                 <Button
                   color="danger"
-                  variant="flat"
+                  variant="faded"
                   onClick={() => setIsOpen(false)}
                 >
                   Close

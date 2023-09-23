@@ -9,24 +9,32 @@ import { useRouter } from "next/navigation";
 import NextAutoFocusTextInputField from "../../nextui-input-fields/next-autofocus-text-input-fields";
 import NextTextReadOnlyInputField from "../../nextui-input-fields/next-text-readonly-input-fields";
 import { Button } from "@nextui-org/react";
-import { AiFillSave } from "react-icons/ai";
+import { AiFillPlusCircle, AiFillSave } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 import { inputFieldValidation } from "@/app/utils/utils";
 import { MdOutlineEditNote } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import NextTextInputField from "../../nextui-input-fields/next-text-input-fields";
 import NextAreaTextInputField from "../../nextui-input-fields/next-textarea-input-fields";
+import { useDispatch } from "react-redux";
+import {
+  setAddnewBaseinfoIdPo,
+  setAddnewBaseinfoTypePo,
+} from "@/store/purchaseorder/po-slice";
 
 const NewSupplier = ({
   type,
   setReloadTable,
   data,
+  addnewFromOutside,
 }: {
   type: string;
   setReloadTable?: () => void;
   data?: any;
+  addnewFromOutside?: boolean;
 }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   //get pathname
   let pathname: string = "";
@@ -78,10 +86,12 @@ const NewSupplier = ({
   }, []);
 
   const handleKeyPress = async (event: any) => {
-    if (type != "edit" && (event.key === "F2" || event.keyCode === 113)) {
-      setIsOpen(true);
-    } else if (event.key === "Escape" || event.keyCode === 27) {
-      setIsOpen(false);
+    if (!addnewFromOutside) {
+      if (type != "edit" && (event.key === "F2" || event.keyCode === 113)) {
+        setIsOpen(true);
+      } else if (event.key === "Escape" || event.keyCode === 27) {
+        setIsOpen(false);
+      }
     }
   };
 
@@ -116,10 +126,14 @@ const NewSupplier = ({
         });
 
         const res = await response.json();
-        if (res == "SUCCESS") {
+        if (res.message == "SUCCESS") {
           setIsOpen(false);
           if (setReloadTable) {
             setReloadTable();
+          }
+          if (addnewFromOutside) {
+            dispatch(setAddnewBaseinfoTypePo("Supplier"));
+            dispatch(setAddnewBaseinfoIdPo(res.newSupplier.supplierid));
           }
           toast.success("Supplier created successfully!", {
             position: "top-right",
@@ -290,6 +304,18 @@ const NewSupplier = ({
             className="inline-block h-6 w-6 text-indigo-700 hover:text-indigo-500 cursor-pointer"
           />
         </Button>
+      ) : addnewFromOutside ? (
+        <Button
+          isIconOnly
+          color="warning"
+          variant="light"
+          aria-label="Create Item"
+        >
+          <AiFillPlusCircle
+            onClick={() => setIsOpen(true)}
+            className="inline-block h-6 w-6 text-indigo-700 hover:text-indigo-500 cursor-pointer"
+          />
+        </Button>
       ) : (
         <button
           onClick={() => setIsOpen(true)}
@@ -359,7 +385,7 @@ const NewSupplier = ({
               <div className="">
                 <Button
                   color="danger"
-                  variant="flat"
+                  variant="faded"
                   onClick={() => setIsOpen(false)}
                 >
                   Close

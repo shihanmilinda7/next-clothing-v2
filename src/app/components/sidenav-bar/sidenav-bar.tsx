@@ -17,6 +17,7 @@ import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { BsBank } from "react-icons/bs";
 import { GiRolledCloth } from "react-icons/gi";
 import { fetchSelPoDataForEdit } from "@/store/purchaseorder/utils";
+import { setAddnewBaseinfoIdPo, setAddnewBaseinfoTypePo } from "@/store/purchaseorder/po-slice";
 
 const SideNavbar = () => {
   let pathname: string = "";
@@ -92,6 +93,8 @@ const SideNavbar = () => {
   };
 
   const navButtonHandler = async (link: string) => {
+    dispatch(setAddnewBaseinfoTypePo(""));
+    dispatch(setAddnewBaseinfoIdPo(""));
     switch (link) {
       case "/home/fabrics":
         window.location.href = "/home/fabrics";
@@ -112,9 +115,6 @@ const SideNavbar = () => {
         window.location.href = "/home/bankdetails";
         break;
       case "/home/purchaseorder":
-        dispatch(
-          fetchSelPoDataForEdit({ apiUrl: pathname, purchaseorderid: 0 })
-        );
         window.location.href = "/home/purchaseorder";
         break;
       default:

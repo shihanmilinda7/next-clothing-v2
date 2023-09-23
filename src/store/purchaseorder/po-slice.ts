@@ -12,6 +12,8 @@ interface poState {
   fabricOptionValues: any[];
   poDetailTableData: any[];
   selPoForEdit: any[];
+  addnewBaseinfoTypePo: any;
+  addnewBaseinfoIdPo: any;
 }
 
 const initialState: poState = {
@@ -20,6 +22,8 @@ const initialState: poState = {
   fabricOptionValues: [],
   poDetailTableData: [],
   selPoForEdit: [],
+  addnewBaseinfoTypePo: "",
+  addnewBaseinfoIdPo: "",
 };
 
 const poSlice = createSlice({
@@ -28,6 +32,12 @@ const poSlice = createSlice({
   reducers: {
     setPoDetailTableData: (state, action) => {
       state.poDetailTableData = action.payload;
+    },
+    setAddnewBaseinfoTypePo: (state, action) => {
+      state.addnewBaseinfoTypePo = action.payload;
+    },
+    setAddnewBaseinfoIdPo: (state, action) => {
+      state.addnewBaseinfoIdPo = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -54,6 +64,10 @@ const poSlice = createSlice({
   },
 });
 
-export const { setPoDetailTableData } = poSlice.actions;
+export const {
+  setPoDetailTableData,
+  setAddnewBaseinfoTypePo,
+  setAddnewBaseinfoIdPo,
+} = poSlice.actions;
 
 export default poSlice.reducer;

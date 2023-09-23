@@ -42,7 +42,7 @@ export const PoDetailTable = ({
 
   const tableHeads = [
     { label: "#", px: "1" },
-    { label: "rowindex", px: "1" },
+    // { label: "rowindex", px: "1" },
     { label: "Size", px: "1" },
     { label: "Ratio pack", px: "2" },
     { label: "Single", px: "2" },
@@ -51,7 +51,7 @@ export const PoDetailTable = ({
 
   const [tableData, setTableData] = useState([]);
   const [lastRemovedRow, setLastRemovedRow] = useState(null);
-  // const [tableUpdate, setTableUpdate] = useState(false);
+  const [tableUpdate, setTableUpdate] = useState(false);
 
   // const [tableData, setTableData] = useState([
   //   { rowindex: 1, size: "Data 1", ratiopack: 2, single: 2, total: 0 },
@@ -59,8 +59,6 @@ export const PoDetailTable = ({
   //   { rowindex: 3, size: "Data 3", ratiopack: 4, single: 4, total: 0 },
   //   { rowindex: 4, size: "Data 4", ratiopack: 5, single: 5, total: 0 },
   // ]);
-
- 
 
   useEffect(() => {
     dispatch(setPoDetailTableData(tableData));
@@ -74,19 +72,26 @@ export const PoDetailTable = ({
 
     // Update the state with the calculated tableData
     setTableData(updatedTableData);
-  }, [rationpacksizeIn, tableData]);
+  }, [rationpacksizeIn, tableUpdate]);
 
   useEffect(() => {
-    setTableData(poDetailsRowsIn ? poDetailsRowsIn : []);
+    const modifiedArray = poDetailsRowsIn?.map((element) => ({
+      ...element, // Copy the existing properties
+      rowstatus: "u", // Add the new property
+    }));
+
+    setTableData(modifiedArray ? modifiedArray : []);
+    setTableUpdate((prv: boolean) => !prv);
     // console.log("poDetailsRowsIns", poDetailsRowsIn);
   }, [poDetailsRowsIn]);
-  
+
   const addRow1 = () => {
     // Generate a unique ID for the new row
     // const index = Math.max(...tableData.map((row) => row.rowindex), 0) + 1;
     const newRowId = Math.max(...tableData.map((row) => row.rowindex), 0) + 1;
     // Create the new empty row object
     const newEmptyRow = {
+      rowstatus: "a",
       rowindex: newRowId,
       size: "",
       ratiopack: 0,
@@ -105,6 +110,7 @@ export const PoDetailTable = ({
     );
 
     const newEmptyRow = {
+      rowstatus: "a",
       rowindex: newRowId,
       size: "",
       ratiopack: 0,
@@ -116,10 +122,27 @@ export const PoDetailTable = ({
     setTableData(updatedTableData);
   };
 
+  // const removeRow = (rowData, rowIndex) => {
+  //   const updatedTableData = tableData.filter(
+  //     (row) => row.rowindex !== rowData.rowindex
+  //   );
+
+  //   // Store the removed row and its original index
+  //   setLastRemovedRow({ rowData, rowIndex });
+
+  //   setTableData(updatedTableData);
+  // };
   const removeRow = (rowData, rowIndex) => {
-    const updatedTableData = tableData.filter(
-      (row) => row.rowindex !== rowData.rowindex
-    );
+    const updatedTableData = tableData.map((row, index) => {
+      if (index === rowIndex) {
+        if (row.purchaseorderdetailid) {
+          return { ...row, rowstatus: "d" };
+        } else {
+          return { ...row, rowstatus: "r" };
+        }
+      }
+      return row;
+    });
 
     // Store the removed row and its original index
     setLastRemovedRow({ rowData, rowIndex });
@@ -127,11 +150,31 @@ export const PoDetailTable = ({
     setTableData(updatedTableData);
   };
 
+  // const undoRemove = () => {
+  //   if (!lastRemovedRow) return;
+
+  //   const updatedTableData = [...tableData];
+  //   updatedTableData.splice(lastRemovedRow.rowIndex, 0, lastRemovedRow.rowData);
+  //   setTableData(updatedTableData);
+
+  //   // Clear the lastRemovedRow variable
+  //   setLastRemovedRow(null);
+  // };
+
   const undoRemove = () => {
     if (!lastRemovedRow) return;
 
-    const updatedTableData = [...tableData];
-    updatedTableData.splice(lastRemovedRow.rowIndex, 0, lastRemovedRow.rowData);
+    const updatedTableData = tableData.map((row, index) => {
+      if (index === lastRemovedRow.rowIndex) {
+        if (row.purchaseorderdetailid) {
+          return { ...row, rowstatus: "u" };
+        } else {
+          return { ...row, rowstatus: "a" };
+        }
+      }
+      return row;
+    });
+
     setTableData(updatedTableData);
 
     // Clear the lastRemovedRow variable
@@ -143,7 +186,7 @@ export const PoDetailTable = ({
       r.rowindex === newVal.rowindex ? newVal : r
     );
     setTableData(updatedArray);
-    // setTableUpdate((prv: boolean) => !prv);
+    setTableUpdate((prv: boolean) => !prv);
   };
 
   return (
@@ -213,16 +256,18 @@ export const PoDetailTable = ({
                 </td>
               </tr>
             ) : (
-              tableData?.map((tableRow: any, index: number) => (
-                <PoDetailTableRow
-                  key={tableRow.rowindex}
-                  index={index}
-                  tableRowIn={tableRow}
-                  onAddRow={() => addRow(tableRow)}
-                  onRemoveRow={() => removeRow(tableRow, index)}
-                  updateTableRows={updateTableRows}
-                />
-              ))
+              tableData?.map((tableRow: any, index: number) =>
+                tableRow?.rowstatus == "r" ||  tableRow?.rowstatus == "d"? null : (
+                  <PoDetailTableRow
+                    key={tableRow.rowindex}
+                    index={index}
+                    tableRowIn={tableRow}
+                    onAddRow={() => addRow(tableRow)}
+                    onRemoveRow={() => removeRow(tableRow, index)}
+                    updateTableRows={updateTableRows}
+                  />
+                )
+              )
             )}
           </tbody>
         </table>

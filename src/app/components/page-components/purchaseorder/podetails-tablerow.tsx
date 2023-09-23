@@ -43,8 +43,8 @@ export const PoDetailTableRow = ({
           />
         </Button>
       </td>
-      <td className="text-center py-1 px-4">{index}</td>
-      <td className="text-center py-1 px-4">{tableRow.rowindex}</td>
+      <td className="text-center py-1 px-4">{index + 1}</td>
+      {/* <td className="text-center py-1 px-4">{tableRow.rowindex}</td> */}
       <td className="text-center py-1 px-4">
         <input
           id="size"
@@ -78,9 +78,7 @@ export const PoDetailTableRow = ({
           autoComplete=""
           className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
           value={tableRow.single}
-          onChange={(e) =>
-            updateData({ ...tableRow, single: e.target.value })
-          }
+          onChange={(e) => updateData({ ...tableRow, single: e.target.value })}
         />
       </td>
       <td className="text-center py-1 px-4">{tableRow.total}</td>
