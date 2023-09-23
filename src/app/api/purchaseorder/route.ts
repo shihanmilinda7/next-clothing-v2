@@ -130,27 +130,86 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const { supplierid, suppliercode, suppliername, email, phone, address } =
-    await request.json();
+  const {
+    purchaseorderid,
+    customerid,
+    date,
+    supplierid,
+    customerpo,
+    exfactorydate,
+    shippingmode,
+    customerstylename,
+    department,
+    shippingmethod,
+    fabricid,
+    rationpacksize,
+    style,
+    colour,
+    description,
+    supplierprice,
+    sellingprice,
+    colourcode,
+    remark,
+    currency,
+    orderstatus,
+    samplestatus,
+    poDetailTableData,
+  } = await request.json();
   let message: string = "SUCCESS";
   try {
     await prisma.$transaction(async (tx) => {
-      // 1. addnew category for geader table.
-      const newFabrics = await tx.suppliers.updateMany({
-        where: { supplierid: parseInt(supplierid) },
+
+      // 1. addnew purchaseorder.
+      const newPo = await tx.purchaseorders.updateMany({
+        where: { purchaseorderid: parseInt(purchaseorderid) },
         data: {
-          suppliercode,
-          suppliername,
-          email,
-          phone,
-          address,
+          customerid: parseInt(customerid),
+          date,
+          supplierid: parseInt(supplierid),
+          customerpo,
+          exfactorydate,
+          shippingmode,
+          customerstylename,
+          department,
+          shippingmethod,
+          fabricid: parseInt(fabricid),
+          rationpacksize,
+          style,
+          colour,
+          description,
+          supplierprice: parseInt(supplierprice),
+          sellingprice: parseInt(sellingprice),
+          colourcode,
+          remark,
+          currency,
+          orderstatus,
+          samplestatus,
         },
       });
 
+      // 2. Verify purchaseorder enterd
+      // if (!newPo.purchaseorderid) {
+      //   throw new Error(`PO not enterd`);
+      // }
+
+      // // 3. addnew purchaseorder details for geader table.
+      // const headerId: number = newPo.purchaseorderid;
+      // for (let i = 0; i < poDetailTableData.length; i++) {
+      //   const element = poDetailTableData[i];
+      //   await tx.purchaseorderdetails.create({
+      //     data: {
+      //       purchaseorderid: headerId,
+      //       rowindex: i + 1,
+      //       size: element.size,
+      //       ratiopack: parseInt(element.ratiopack),
+      //       single: parseInt(element.single),
+      //     },
+      //   });
+      // }
       return "";
     });
   } catch (error) {
-    console.error("Error updating Supplier", error);
+    console.error("Error adding new purchase order:", error);
     message = "FAIL";
   }
   return NextResponse.json(message);

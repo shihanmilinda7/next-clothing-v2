@@ -50,6 +50,9 @@ export const PoDetailTable = ({
   ];
 
   const [tableData, setTableData] = useState([]);
+  const [lastRemovedRow, setLastRemovedRow] = useState(null);
+  // const [tableUpdate, setTableUpdate] = useState(false);
+
   // const [tableData, setTableData] = useState([
   //   { rowindex: 1, size: "Data 1", ratiopack: 2, single: 2, total: 0 },
   //   { rowindex: 2, size: "Data 2", ratiopack: 3, single: 3, total: 0 },
@@ -57,8 +60,11 @@ export const PoDetailTable = ({
   //   { rowindex: 4, size: "Data 4", ratiopack: 5, single: 5, total: 0 },
   // ]);
 
-  const [lastRemovedRow, setLastRemovedRow] = useState(null);
-  const [tableUpdate, setTableUpdate] = useState(false);
+ 
+
+  useEffect(() => {
+    dispatch(setPoDetailTableData(tableData));
+  }, [tableData]);
 
   useEffect(() => {
     const updatedTableData = tableData?.map((item) => ({
@@ -68,16 +74,13 @@ export const PoDetailTable = ({
 
     // Update the state with the calculated tableData
     setTableData(updatedTableData);
-  }, [tableUpdate, rationpacksizeIn, tableData]);
+  }, [rationpacksizeIn, tableData]);
 
   useEffect(() => {
-    dispatch(setPoDetailTableData(tableData));
-  }, [tableData]);
-
-  useEffect(() => {
-    setTableData(poDetailsRowsIn);
+    setTableData(poDetailsRowsIn ? poDetailsRowsIn : []);
+    // console.log("poDetailsRowsIns", poDetailsRowsIn);
   }, [poDetailsRowsIn]);
-
+  
   const addRow1 = () => {
     // Generate a unique ID for the new row
     // const index = Math.max(...tableData.map((row) => row.rowindex), 0) + 1;
@@ -140,7 +143,7 @@ export const PoDetailTable = ({
       r.rowindex === newVal.rowindex ? newVal : r
     );
     setTableData(updatedArray);
-    setTableUpdate((prv: boolean) => !prv);
+    // setTableUpdate((prv: boolean) => !prv);
   };
 
   return (

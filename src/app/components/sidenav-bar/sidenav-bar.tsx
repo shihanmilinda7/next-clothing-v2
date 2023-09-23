@@ -16,6 +16,7 @@ import { BiPurchaseTagAlt } from "react-icons/bi";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { BsBank } from "react-icons/bs";
 import { GiRolledCloth } from "react-icons/gi";
+import { fetchSelPoDataForEdit } from "@/store/purchaseorder/utils";
 
 const SideNavbar = () => {
   let pathname: string = "";
@@ -111,6 +112,9 @@ const SideNavbar = () => {
         window.location.href = "/home/bankdetails";
         break;
       case "/home/purchaseorder":
+        dispatch(
+          fetchSelPoDataForEdit({ apiUrl: pathname, purchaseorderid: 0 })
+        );
         window.location.href = "/home/purchaseorder";
         break;
       default:

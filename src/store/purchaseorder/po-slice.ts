@@ -49,7 +49,7 @@ const poSlice = createSlice({
       })
       .addCase(fetchSelPoDataForEdit.fulfilled, (state, action) => {
         state.selPoForEdit = action.payload;
-        // console.log("selPoForEdit", action.payload);
+        console.log("selPoForEdit", action.payload);
       });
   },
 });

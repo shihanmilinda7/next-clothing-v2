@@ -270,9 +270,9 @@ export default function PurchaseOrder() {
   const saveButtonHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (purchaseorderid) {
-      // updateItem();
+      updatePo();
     } else {
-      savePo();
+      addnewPo();
     }
   };
 
@@ -292,7 +292,7 @@ export default function PurchaseOrder() {
     // }
   };
 
-  const savePo = async () => {
+  const addnewPo = async () => {
     const validation = inputFieldValidation({});
     if (validation == 0) {
       const response = await fetch(pathname + "/api/purchaseorder", {
@@ -326,6 +326,68 @@ export default function PurchaseOrder() {
       const res = await response.json();
       if (res == "SUCCESS") {
         toast.success(`Purchase order created successfully!`, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        router.push("/home/purchaseorder");
+      } else {
+        toast.error("Error!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+
+      return res;
+    }
+  };
+
+  const updatePo = async () => {
+    const validation = inputFieldValidation({});
+    if (validation == 0) {
+      const response = await fetch(pathname + "/api/purchaseorder", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          purchaseorderid,
+          customerid: customerid.values().next().value ?? 0,
+          date,
+          supplierid: supplierid.values().next().value ?? 0,
+          customerpo,
+          exfactorydate,
+          shippingmode: shippingmode.values().next().value ?? "0",
+          customerstylename,
+          department,
+          shippingmethod: shippingmethod.values().next().value ?? "0",
+          fabricid: fabricid.values().next().value ?? 0,
+          rationpacksize,
+          style,
+          colour,
+          description,
+          supplierprice,
+          sellingprice,
+          colourcode,
+          remark,
+          currency: currency.values().next().value ?? "0",
+          orderstatus: orderstatus.values().next().value ?? "0",
+          samplestatus: samplestatus.values().next().value ?? "0",
+          poDetailTableData,
+        }),
+      });
+      const res = await response.json();
+      if (res == "SUCCESS") {
+        toast.success(`Purchase order updated successfully!`, {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: false,

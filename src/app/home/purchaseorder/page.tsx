@@ -113,7 +113,7 @@ export default function PurchaseOrder() {
       </div>
       <div className="flex w-full mt-3 item-center justify-center">
         <div className="flex flex-col w-full">
-          <PoTable poRowObjects={poRowObjects} />
+          <PoTable poRowObjects={poRowObjects } />
           <div className="md:px-2 mt-3">
             <Pagination
               isCompact
