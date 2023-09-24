@@ -32,7 +32,7 @@ const config: Config = {
           colors: {}, // dark theme colors
         },
         modern: {
-          extend: "dark", // <- inherit default values from dark theme
+          extend: "light", // <- inherit default values from dark theme
           colors: {
             background: "#0D001A",
             foreground: "#ffffff",
