@@ -11,7 +11,7 @@ const PoPrintableComponent = ({
   poDataForPrint: any[];
 }) => {
   const poData = poDataForPrint[0];
-  console.log(poData);
+  // console.log(poData);
   const sample = "Sample Data";
   const printDiv = () => {
     const divToPrint = document.getElementById("printableContent");
