@@ -20,7 +20,6 @@ export const options: NextAuthOptions = {
       async authorize(
         credentials: Record<string, string> | undefined
       ): Promise<any | null> {
-
         try {
           if (!credentials?.username || !credentials?.password) {
             return null;
@@ -92,4 +91,7 @@ export const options: NextAuthOptions = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/",
+  },
 };

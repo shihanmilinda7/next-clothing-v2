@@ -1,4 +1,4 @@
 
 export { default } from "next-auth/middleware";
 
- export const config = {matcher: ["/dashboard", "/clientcompo"]}
+ export const config = {matcher: ["/home/:path*", "/clientcompo"]}
