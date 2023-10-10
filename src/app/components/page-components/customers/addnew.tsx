@@ -109,7 +109,7 @@ const NewCustomer = ({
 
   const addnew = async () => {
     const validation = inputFieldValidation({
-      customercode,
+      // customercode,
       customername,
     });
     try {
@@ -345,15 +345,15 @@ const NewCustomer = ({
                     onChange={(e) => setCustomerid(e.target.value)}
                   />
                 </div>
-                <div>
+                {/* <div>
                   <NextAutoFocusTextInputField
                     label="Customer Code"
                     value={customercode}
                     onChange={(e) => setCustomercode(e.target.value)}
                   />
-                </div>
+                </div> */}
                 <div>
-                  <NextTextInputField
+                  <NextAutoFocusTextInputField
                     label="Customer Name"
                     value={customername}
                     onChange={(e) => setSupplername(e.target.value)}

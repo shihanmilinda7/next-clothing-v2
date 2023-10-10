@@ -38,7 +38,7 @@ const PoPrintableComponent = ({
 <div style=" display:flex; position:absolute;width:93px; height:14.4px; top:148.8px; left:443.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.customerpo}</div>
 <div style=" display:flex; position:absolute;width:51px; height:14.4px; top:177.6px; left:80px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > Factory:</div>
 <div style=" display:flex; position:absolute;width:301px; height:14.4px; top:177.6px; left:149.6px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > ${poData.suppliername}</div>
-<div style=" display:flex; position:absolute;width:201px; height:57.6px; top:192px; left:149.6px;font-size:14px; font-weight:normal;line-height: 1rem;justify-content:flex-start; align-items:flex-start; " > ${poData.address.replace(/\n/g, '<br />')}</div>
+<div style=" display:flex; position:absolute;width:201px; height:57.6px; top:192px; left:149.6px;font-size:14px; font-weight:normal;line-height: 1rem;justify-content:flex-start; align-items:flex-start; " > ${poData.address?.replace(/\n/g, '<br />')}</div>
 
 <div style=" display:flex; position:absolute;width:475.2px; height:14.4px; top:260.6px; left:80px;font-size:14px; font-weight:normal;justify-content:center; align-items:flex-end;border-bottom:2px solid black;  " >  </div>
 <div style=" display:flex; position:absolute;width:69.6px; height:14.4px; top:285.4px; left:80px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Style #:</div>

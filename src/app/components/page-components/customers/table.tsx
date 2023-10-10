@@ -42,7 +42,7 @@ export const CustomerTable = ({
   const tableHeads = [
     "#",
     "Customer ID",
-    "Customer Code",
+    // "Customer Code",
     "Customer Name",
     "Email",
     "Phone",
@@ -142,7 +142,7 @@ export const CustomerTable = ({
               >
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{tableRow.customerid}</TableCell>
-                <TableCell>{tableRow.customercode}</TableCell>
+                {/* <TableCell>{tableRow.customercode}</TableCell> */}
                 <TableCell>{tableRow.customername}</TableCell>
                 <TableCell>{tableRow.email}</TableCell>
                 <TableCell>{tableRow.phone}</TableCell>

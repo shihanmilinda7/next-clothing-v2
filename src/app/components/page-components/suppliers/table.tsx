@@ -42,7 +42,7 @@ export const SupplierTable = ({
   const tableHeads = [
     "#",
     "Supplier ID",
-    "Supplier Code",
+    // "Supplier Code",
     "Supplier Name",
     "Email",
     "Phone",
@@ -142,7 +142,7 @@ export const SupplierTable = ({
               >
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{tableRow.supplierid}</TableCell>
-                <TableCell>{tableRow.suppliercode}</TableCell>
+                {/* <TableCell>{tableRow.suppliercode}</TableCell> */}
                 <TableCell>{tableRow.suppliername}</TableCell>
                 <TableCell>{tableRow.email}</TableCell>
                 <TableCell>{tableRow.phone}</TableCell>
