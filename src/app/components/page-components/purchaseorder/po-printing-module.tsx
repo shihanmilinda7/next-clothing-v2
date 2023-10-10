@@ -80,9 +80,6 @@ const PoPrintableComponent = ({
 <div style=" display:flex; position:absolute;width:89.4px; height:14.4px; top:645.4px; left:160.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.colourcode}</div>
 <div style=" display:flex; position:absolute;width:18.6px; height:14.4px; top:645.4px; left:239px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > DEPT:</div>
 <div style=" display:flex; position:absolute;width:93px; height:14.4px; top:645.4px; left:280.2px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.department}</div>
-<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:645.4px; left:380.8px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Selling Price ${poData.currency}:</div>
-<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:645.4px; left:460.8px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.sellingprice}</div>
-
 `);
     //   newWin.document.write(`
     //   <table style="position: absolute; bottom: 20px; border-collapse: collapse; width: 100%;">
