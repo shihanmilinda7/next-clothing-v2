@@ -80,15 +80,15 @@ model purchaseorders{
   style String   
   colour String   
   description String   
-  supplierprice Int   
-  sellingprice Int   
+  supplierprice Float   
+  sellingprice Float   
   colourcode String   
   remark String   
   currency String   
   orderstatus String   
   samplestatus String   
   totalqty Int  @default(0) 
-  totalvalue Int @default(0)   
+  totalvalue Float @default(0.00)   
   dcdate String @default("2023-02-12")   
 }
 
@@ -109,7 +109,7 @@ model invoice{
   customerid Int   
   bankaccountid Int   
   totalqty Int  @default(0) 
-  totalvalue Int @default(0)    
+  totalvalue Float @default(0.00)    
   currency String   
   remark String   
 }
@@ -123,5 +123,5 @@ model invoicedetails{
   style String   
   colour String   
   totalqty Int   
-  sellingprice Int   
+  sellingprice Float   
 }

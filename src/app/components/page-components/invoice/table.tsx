@@ -101,6 +101,7 @@ export const InvoiceTable = ({
                         className="inline-block h-6 w-6 text-red-700 hover:text-red-500 cursor-pointer"
                       />
                     </Button>
+                    
                   </div>
                 </TableCell>
               </TableRow>

@@ -31,6 +31,7 @@ import NextNumberReadOnlyInputField from "@/app/components/nextui-input-fields/n
 import NextDateInputField from "@/app/components/nextui-input-fields/next-date-input-fields";
 import NextReadonlySelectInputField from "@/app/components/nextui-input-fields/next-select-readonly-input-fields";
 import { handleDelete } from "./utils";
+import InvoicePrintableComponent from "@/app/components/page-components/invoice/invoice-printing-module";
 
 export default function NewInvoice() {
   const router = useRouter();
@@ -86,7 +87,8 @@ export default function NewInvoice() {
   });
 
   // const [allPoDetails, setAllPoDetails] = useState([]);
-  const [savedPoDetails, setSavedPoDetails] = useState([]);
+  const [invoiceHeaderData, setInvoiceHeaderData] = useState([]);
+  const [invoiceDetailData, setInvoiceDetailData] = useState([]);
 
   const [customerid, setCustomerid] = useState(new Set([]));
   const [bankaccountid, setBankaccountid] = useState(new Set([]));
@@ -134,7 +136,7 @@ export default function NewInvoice() {
     }));
 
     const totalValue = updatedTableData?.reduce((total: any, obj: any) => {
-      return total + parseInt(obj.totalvalue);
+      return total + parseFloat(obj.totalvalue);
     }, 0);
     handleInputChange(totalValue, "totalvalue");
   }, [selectedPoDataList]);
@@ -179,6 +181,8 @@ export default function NewInvoice() {
         totalvalue: y.totalvalue,
         remark: y.remark,
       }));
+      setInvoiceHeaderData(resData);
+      setInvoiceDetailData(res.invoiceDetailData);
 
       setFormData(tmpInvoiceData[0]);
       // console.log("resData[0].customerid", resData[0].customerid);
@@ -251,6 +255,7 @@ export default function NewInvoice() {
         });
         const res = await response.json();
         if (res.message == "SUCCESS") {
+          console.log("res", res);
           toast.success(`Invoice updated successfully!`, {
             position: "top-right",
             autoClose: 2000,
@@ -294,12 +299,16 @@ export default function NewInvoice() {
   return (
     <div className="flex ml-3 flex-col bg-slate-200 w-full">
       <span className="text-3xl font-black leading-none text-gray-900 select-none">
-        New Invoi<span className="text-indigo-600">ce</span>
+        {formData.invoiceid ? "Edit" : "Create new"} Invoi
+        <span className="text-indigo-600">ce</span>
       </span>
       <div className="justify-end w-full mt-3 flex items-center mr-3 gap-2">
-        {/* {purchaseorderid ? (
-          <PoPrintableComponent poDataForPrint={selPoForEdit} />
-        ) : null} */}
+        {formData.invoiceid ? (
+          <InvoicePrintableComponent
+            invoiceHeaderData={invoiceHeaderData}
+            invoiceDetailData={invoiceDetailData}
+          />
+        ) : null}
         <Button
           color="primary"
           onClick={newInvoiceScreen}

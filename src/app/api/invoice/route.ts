@@ -31,12 +31,12 @@ export async function POST(request: Request) {
           where: { invoiceid: parseInt(formData.invoiceid) },
           data: {
             invoiceno: formData.invoiceno,
-            date: formData.invoiceno,
-            paymentterm: formData.invoiceno,
+            date: formData.date,
+            paymentterm: formData.paymentterm,
             customerid: parseInt(customerid),
             bankaccountid: parseInt(bankaccountid),
             totalqty: parseInt(formData.totalqty),
-            totalvalue: parseInt(formData.totalvalue),
+            totalvalue: parseFloat(formData.totalvalue),
             currency,
             remark: formData.remark,
           },
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
             customerid: parseInt(customerid),
             bankaccountid: parseInt(bankaccountid),
             totalqty: parseInt(formData.totalqty),
-            totalvalue: parseInt(formData.totalvalue),
+            totalvalue: parseFloat(formData.totalvalue),
             currency,
             remark: formData.remark,
           },
@@ -75,7 +75,7 @@ export async function POST(request: Request) {
             style: element.style,
             colour: element.colour,
             totalqty: element.totalqty,
-            sellingprice: element.sellingprice,
+            sellingprice: parseFloat(element.sellingprice),
           },
         });
       }

@@ -9,18 +9,24 @@ export async function GET(request: Request) {
   let res: any;
   try {
     await prisma.$transaction(async (tx) => {
-      let invoiceData = await tx.invoice.findMany({
-        where: {
-          invoiceid: parseInt(invoiceid),
-        },
-      });
-
+      // let invoiceData = await tx.invoice.findMany({
+      //   where: {
+      //     invoiceid: parseInt(invoiceid),
+      //   },
+      // });
+      const rawQuery = Prisma.sql`
+                    SELECT i.*, c.customername, c.address,b.*
+                    FROM invoice i
+                    JOIN customers c ON i.customerid = c.customerid JOIN bankdetails as b ON i.bankaccountid = b.bankaccountid
+                    WHERE i.invoiceid = ${parseInt(invoiceid)}
+                  `;
+      const invoiceData = await tx.$queryRaw(rawQuery);
       let invoiceDetailData = await tx.invoicedetails.findMany({
         where: {
           invoiceid: parseInt(invoiceid),
         },
       });
-
+      // console.log("invoiceData", invoiceData);
       // const rawQuery = Prisma.sql`select p.*,c.customername,s.*,f.fabricname from purchaseorders as p
       // left join customers as c on p.customerid = c.customerid
       // left join suppliers as s on p.supplierid = s.supplierid

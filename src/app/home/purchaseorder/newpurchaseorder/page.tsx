@@ -82,8 +82,12 @@ export default function PurchaseOrder() {
 
   const shippingmodeOptionValues = [
     {
-      value: "FOB",
-      name: "FOB",
+      value: "FOB (By air)",
+      name: "FOB (By air)",
+    },
+    {
+      value: "FOB (By Sea)",
+      name: "FOB (By Sea)",
     },
     {
       value: "CIF",
@@ -509,7 +513,7 @@ export default function PurchaseOrder() {
   return (
     <div className="flex ml-3 flex-col bg-slate-200 w-full">
       <span className="text-3xl font-black leading-none text-gray-900 select-none">
-        Create new purchase or<span className="text-indigo-600">der</span>
+       {purchaseorderid ? "Edit" : "Create new"} purchase or<span className="text-indigo-600">der</span>
       </span>
       <div className="justify-end w-full mt-3 flex items-center mr-3 gap-2">
         {purchaseorderid ? (

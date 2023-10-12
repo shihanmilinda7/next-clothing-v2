@@ -20,8 +20,8 @@ const PoPrintableComponent = ({
     newWin.document.write("<html><head><title>Print</title></head><body>");
     newWin.document.write(`
       <div style=" display:flex; position:absolute;width:475.2px; height:33.6px; top:0px; left:80px;font-size:26px; font-weight:bold;justify-content:center; align-items:center; " > A & F Sourcing Limited</div>
-<div style=" display:flex; position:absolute;width:475.2px; height:14.4px; top:33.6px; left:80px;font-size:14px; font-weight:normal;justify-content:center; align-items:flex-end; " > Unit 150, 981 Great West Road, Brenford, TW8 9DN</div>
-<div style=" display:flex; position:absolute;width:475.2px; height:14.4px; top:48px; left:80px;font-size:14px; font-weight:normal;justify-content:center; align-items:flex-end; " > Tel : +44 020 3948 5008 / +44 020 3883 9577 /www.aandfsourcing.com</div>
+<div style=" display:flex; position:absolute;width:475.2px; height:14.4px; top:33.6px; left:80px;font-size:14px; font-weight:normal;justify-content:center; align-items:flex-end; " > Unit 02, Maple Grove Business Centre, Lawrence Road, Hounslow TW4 6DR.</div>
+<div style=" display:flex; position:absolute;width:475.2px; height:14.4px; top:48px; left:80px;font-size:14px; font-weight:normal;justify-content:center; align-items:flex-end; " > Tel : 44 020 3948 5008 www.aandfsourcing.com</div>
 <div style=" display:flex; position:absolute;width:475.2px; height:14.4px; top:62.4px; left:80px;font-size:14px; font-weight:normal;justify-content:center; align-items:flex-end; " > VAT Registration Number: 273 8855 56</div>
 
 <div style=" display:flex; position:absolute;width:475.2px; height:14.4px; top:73.6px; left:80px;font-size:14px; font-weight:normal;justify-content:center; align-items:flex-end;border-bottom:2px solid black;  " >  </div>
