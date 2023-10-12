@@ -89,7 +89,7 @@ export const FabricTable = ({
         toast.dismiss();
         toast.success("Fabric item deleted successfully!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -100,7 +100,7 @@ export const FabricTable = ({
       } else {
         toast.error("Error!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

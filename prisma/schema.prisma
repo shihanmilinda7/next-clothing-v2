@@ -89,6 +89,7 @@ model purchaseorders{
   samplestatus String   
   totalqty Int  @default(0) 
   totalvalue Int @default(0)   
+  dcdate String @default("2023-02-12")   
 }
 
 model purchaseorderdetails{
@@ -98,4 +99,29 @@ model purchaseorderdetails{
   size String   
   ratiopack Int   
   single Int   
+}
+
+model invoice{
+  invoiceid       Int      @id @default(autoincrement())
+  invoiceno String   
+  date String   
+  paymentterm String
+  customerid Int   
+  bankaccountid Int   
+  totalqty Int  @default(0) 
+  totalvalue Int @default(0)    
+  currency String   
+  remark String   
+}
+
+model invoicedetails{
+  invoicedetailid       Int      @id @default(autoincrement())
+  invoiceid Int   
+  purchaseorderid Int
+  description String   
+  customerpo String   
+  style String   
+  colour String   
+  totalqty Int   
+  sellingprice Int   
 }

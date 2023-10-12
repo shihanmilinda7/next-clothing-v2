@@ -137,7 +137,7 @@ const NewSupplier = ({
           }
           toast.success("Supplier created successfully!", {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -155,7 +155,7 @@ const NewSupplier = ({
     } catch (error) {
       toast.error("Error!", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -209,7 +209,7 @@ const NewSupplier = ({
     } catch (error) {
       toast.error("Error!", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -261,7 +261,7 @@ const NewSupplier = ({
         }
         toast.success("Supplier deleted successfully!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -272,7 +272,7 @@ const NewSupplier = ({
       } else {
         toast.error("Error!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

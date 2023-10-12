@@ -176,6 +176,8 @@ export default function PurchaseOrder() {
   );
   const [date, setDate] = useState(tmpSelPoForEdit?.date ?? "");
 
+  const [dcdate, setDcdate] = useState(tmpSelPoForEdit?.dcdate ?? "");
+
   const [supplierid, setSupplierid] = useState(
     tmpSelPoForEdit?.supplierid
       ? new Set([tmpSelPoForEdit?.supplierid.toString()])
@@ -369,11 +371,11 @@ export default function PurchaseOrder() {
           poDetailTableData,
           totalqty,
           totalvalue,
+          dcdate
         }),
       });
       const res = await response.json();
       if (res == "SUCCESS") {
-        console.log("=====================================");
         toast.success(`Purchase order created successfully!`, {
           position: "top-right",
           autoClose: 2000,
@@ -435,6 +437,7 @@ export default function PurchaseOrder() {
           totalqty,
           totalvalue,
           poDetailTableData,
+          dcdate,
         }),
       });
       const res = await response.json();
@@ -509,7 +512,9 @@ export default function PurchaseOrder() {
         Create new purchase or<span className="text-indigo-600">der</span>
       </span>
       <div className="justify-end w-full mt-3 flex items-center mr-3 gap-2">
-        {purchaseorderid ? <PoPrintableComponent poDataForPrint = {selPoForEdit}/> : null}
+        {purchaseorderid ? (
+          <PoPrintableComponent poDataForPrint={selPoForEdit} />
+        ) : null}
         <Button
           color="primary"
           onClick={newPoScreen}
@@ -679,6 +684,13 @@ export default function PurchaseOrder() {
                   handleSelectChangeEvent(e, setSamplestatus, samplestatus)
                 }
                 optionValues={sampleStatusOptionValues}
+              />
+            </div>
+            <div className="mb-6 md:mb-0 gap-4 w-full px-3 sm:w-1/3">
+              <NextDateInputField
+                label="DC Date"
+                value={dcdate}
+                onChange={(e) => setDcdate(e.target.value)}
               />
             </div>
           </div>

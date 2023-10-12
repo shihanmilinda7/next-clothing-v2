@@ -45,6 +45,21 @@ export const fetchFabricData: any = createAsyncThunk(
   }
 );
 
+export const fetchBankData: any = createAsyncThunk(
+  "po/fetchBankData",
+  async (apiUrl: string) => {
+    const response = await fetch(`${apiUrl}/api/bankdetails`);
+    const res = await response.json();
+    // Create option array
+    const optionArray: { value: number; name: string }[] = res.bankDetailData.map(
+      (c: any) => {
+        return { value: c.bankaccountid, name: c.bankname };
+      }
+    );
+    return optionArray;
+  }
+);
+
 export const fetchSelPoDataForEdit: any = createAsyncThunk(
   "po/fetchSelPoDataForEdit",
   async (params: { apiUrl: string; purchaseorderid: any }) => {

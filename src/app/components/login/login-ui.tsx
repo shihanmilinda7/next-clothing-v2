@@ -63,7 +63,7 @@ const LoginPage = () => {
       if (response?.error) {
         toast.error("Username or Password Incorrect!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -75,7 +75,7 @@ const LoginPage = () => {
       }
       toast.success("Logged in successfully!", {
         position: "top-right",
-        autoClose: 1000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -88,7 +88,7 @@ const LoginPage = () => {
       console.log("System error please reload!", error);
       toast.error("error", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -128,7 +128,7 @@ const LoginPage = () => {
                 htmlFor="email"
                 className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
               >
-                E-Mail Address:
+                Username:
               </label>
               <div className="relative">
                 <div className="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">

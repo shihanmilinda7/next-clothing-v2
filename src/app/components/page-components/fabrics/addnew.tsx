@@ -124,7 +124,7 @@ const NewFabric = ({
           }
           toast.success("Fabric item created successfully!", {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -138,7 +138,7 @@ const NewFabric = ({
     } catch (error) {
       toast.error("Error!", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -184,7 +184,7 @@ const NewFabric = ({
     } catch (error) {
       toast.error("Error!", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -236,7 +236,7 @@ const NewFabric = ({
         }
         toast.success("Fabric item deleted successfully!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -247,7 +247,7 @@ const NewFabric = ({
       } else {
         toast.error("Error!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

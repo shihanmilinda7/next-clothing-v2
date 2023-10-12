@@ -72,6 +72,7 @@ export async function POST(request: Request) {
     totalqty,
     totalvalue,
     poDetailTableData,
+    dcdate,
   } = await request.json();
   let message: string = "SUCCESS";
   try {
@@ -102,6 +103,7 @@ export async function POST(request: Request) {
           samplestatus,
           totalqty: parseInt(totalqty),
           totalvalue: parseInt(totalvalue),
+          dcdate,
         },
       });
 
@@ -162,6 +164,7 @@ export async function PUT(request: Request) {
     totalqty,
     totalvalue,
     poDetailTableData,
+    dcdate,
   } = await request.json();
   let message: string = "SUCCESS";
   try {
@@ -193,6 +196,7 @@ export async function PUT(request: Request) {
           samplestatus,
           totalqty: parseInt(totalqty),
           totalvalue: parseInt(totalvalue),
+          dcdate,
         },
       });
 

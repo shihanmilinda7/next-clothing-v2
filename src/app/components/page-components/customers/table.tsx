@@ -98,7 +98,7 @@ export const CustomerTable = ({
         toast.dismiss();
         toast.success("Customer deleted successfully!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -109,7 +109,7 @@ export const CustomerTable = ({
       } else {
         toast.error("Error!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

@@ -135,7 +135,7 @@ const NewBankDetail = ({
           }
           toast.success("Bank details created successfully!", {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -156,7 +156,7 @@ const NewBankDetail = ({
     } catch (error) {
       toast.error("Error!", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -217,7 +217,7 @@ const NewBankDetail = ({
     } catch (error) {
       toast.error("Error!", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -269,7 +269,7 @@ const NewBankDetail = ({
         }
         toast.success("Bank details deleted successfully!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -280,7 +280,7 @@ const NewBankDetail = ({
       } else {
         toast.error("Error!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

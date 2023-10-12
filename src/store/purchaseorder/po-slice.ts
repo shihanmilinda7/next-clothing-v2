@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  fetchBankData,
   fetchCustomerData,
   fetchFabricData,
   fetchSelPoDataForEdit,
@@ -10,6 +11,7 @@ interface poState {
   customerOptionValues: any[];
   supplierOptionValues: any[];
   fabricOptionValues: any[];
+  bankdetailOptionValues: any[];
   poDetailTableData: any[];
   selPoForEdit: any[];
   addnewBaseinfoTypePo: any;
@@ -20,6 +22,7 @@ const initialState: poState = {
   customerOptionValues: [],
   supplierOptionValues: [],
   fabricOptionValues: [],
+  bankdetailOptionValues: [],
   poDetailTableData: [],
   selPoForEdit: [],
   addnewBaseinfoTypePo: "",
@@ -56,6 +59,9 @@ const poSlice = createSlice({
       })
       .addCase(fetchFabricData.fulfilled, (state, action) => {
         state.fabricOptionValues = action.payload;
+      })
+      .addCase(fetchBankData.fulfilled, (state, action) => {
+        state.bankdetailOptionValues = action.payload;
       })
       .addCase(fetchSelPoDataForEdit.fulfilled, (state, action) => {
         state.selPoForEdit = action.payload;

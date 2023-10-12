@@ -138,7 +138,7 @@ const NewCustomer = ({
           }
           toast.success("Customer created successfully!", {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -156,7 +156,7 @@ const NewCustomer = ({
     } catch (error) {
       toast.error("Error!", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -210,7 +210,7 @@ const NewCustomer = ({
     } catch (error) {
       toast.error("Error!", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -262,7 +262,7 @@ const NewCustomer = ({
         }
         toast.success("Customer deleted successfully!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -273,7 +273,7 @@ const NewCustomer = ({
       } else {
         toast.error("Error!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

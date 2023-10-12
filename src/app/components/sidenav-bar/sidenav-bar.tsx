@@ -18,6 +18,7 @@ import { BsBank } from "react-icons/bs";
 import { GiRolledCloth } from "react-icons/gi";
 import { fetchSelPoDataForEdit } from "@/store/purchaseorder/utils";
 import { setAddnewBaseinfoIdPo, setAddnewBaseinfoTypePo } from "@/store/purchaseorder/po-slice";
+import { setAllPoDataList, setModifiedPoDataList, setSelectedPoList } from "@/store/invoice/invoice-slice";
 
 const SideNavbar = () => {
   let pathname: string = "";
@@ -39,7 +40,7 @@ const SideNavbar = () => {
 
   const menus = [
     { name: "POs", link: "/home/purchaseorder", icon: BiPurchaseTagAlt },
-    // { name: "Invoice", link: "/home/sales", icon: LiaFileInvoiceDollarSolid },
+    { name: "Invoice", link: "/home/invoice", icon: LiaFileInvoiceDollarSolid },
     {
       name: "Customers",
       link: "/home/customers",
@@ -95,12 +96,18 @@ const SideNavbar = () => {
   const navButtonHandler = async (link: string) => {
     dispatch(setAddnewBaseinfoTypePo(""));
     dispatch(setAddnewBaseinfoIdPo(""));
+    dispatch(setSelectedPoList([]));
+    dispatch(setAllPoDataList([]));
+    dispatch(setModifiedPoDataList([]));
     switch (link) {
       case "/home/fabrics":
         window.location.href = "/home/fabrics";
         break;
       case "/home/products":
         window.location.href = "/home/products";
+        break;
+      case "/home/invoice":
+        window.location.href = "/home/invoice";
         break;
       case "/home/customers":
         window.location.href = "/home/customers";
