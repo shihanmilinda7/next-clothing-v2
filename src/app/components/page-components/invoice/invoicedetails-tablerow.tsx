@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input, Textarea } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
 
@@ -35,7 +35,18 @@ export const InvoiceDetailTableRow = ({
       <td className="text-center py-1 px-4">{index + 1}</td>
       <td className="text-center py-1 px-4">
         <div className="flex flex-row">
-          <Input
+          <Textarea
+            label=""
+            labelPlacement="outside"
+            placeholder="Enter your description"
+            className="max-w-xs"
+            minRows={2}
+            value={tableRow.description}
+            onChange={(e) =>
+              updateData({ ...tableRow, description: e.target.value })
+            }
+          />
+          {/* <Input
             type="text"
             variant="flat"
             label=""
@@ -45,7 +56,7 @@ export const InvoiceDetailTableRow = ({
             onChange={(e) =>
               updateData({ ...tableRow, description: e.target.value })
             }
-          />
+          /> */}
           {/* <input
             id="remark"
             name="remark"

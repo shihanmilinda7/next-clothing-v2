@@ -33,8 +33,8 @@ const LoginPage = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const [username, setUsername] = useState("admin");
-  const [password, setPassword] = useState("admin");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const customStyles = {
     overlay: {

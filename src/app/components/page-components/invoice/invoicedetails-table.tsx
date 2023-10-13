@@ -137,7 +137,7 @@ export const InvoiceDetailTable = ({
               >
                 <SelectPoScreen />
               </th>
-              <th className={"text-center py-1 text-sm font-bold w-40"}>
+              <th className={"text-center py-1 text-sm font-bold w-80"}>
                 Description
               </th>
               <th className={"text-center py-1 text-sm font-bold w-40"}>

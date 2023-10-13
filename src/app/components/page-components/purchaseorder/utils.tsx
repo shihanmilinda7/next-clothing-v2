@@ -36,9 +36,13 @@ export const getPackingListTable: any = (data) => {
   });
   addSpanToDiv("R.Pack", cdivr);
   addSpanToDiv(ratiopackcount, cdivr);
-  addEmptySpanToDiv(" ", cdivr);
-  addEmptySpanToDiv(" ", cdivr);
-  addEmptySpanToDiv(" ", cdivr, true);
+  addSpanToDiv("  ", cdivr);
+  addSpanToDiv("  ", cdivr);
+  // addSpanToDiv(" - ", cdivr);
+  addEmptySpanToDiv("  ", cdivr, true);
+
+  // addEmptySpanToDiv(" ", cdivr);
+  // addEmptySpanToDiv(" ", cdivr);
   //finally
   odiv.appendChild(cdivr);
   //rows
@@ -53,11 +57,11 @@ export const getPackingListTable: any = (data) => {
       },
     });
     addSpanToDiv(row.size, cdiv);
-    addSpanToDiv(row.ratiopack*1, cdiv);
-    addSpanToDiv(row.single*1 , cdiv);
-    addSpanToDiv(parseInt(row.ratiopack)*1 * ratiopackcount*1, cdiv);
+    addSpanToDiv(row.ratiopack * 1, cdiv);
+    addSpanToDiv(row.single * 1, cdiv);
+    addSpanToDiv(parseInt(row.ratiopack) * 1 * ratiopackcount * 1, cdiv);
     addSpanToDiv(
-      parseInt(row.single) + parseInt(row.ratiopack) * ratiopackcount*1,
+      parseInt(row.single) + parseInt(row.ratiopack) * ratiopackcount * 1,
       cdiv,
       true
     );
@@ -121,6 +125,7 @@ const addSpanToDiv = (title, cdiv, noBottomBorder = false) => {
     //borderBottom: "1px solid black",
     textAlign: "center",
     paddingTop: "3px",
+    color: "black",
     minHeight: "14px",
   });
 
@@ -226,70 +231,70 @@ class DomElementIdGenerator {
 }
 
 export const getSizeQtyTable = (data) => {
-    const ratiopackcount = data[0].ratiopacksize ?? 0;
-    const odiv = gdiv([], {
-      css: {
-        display: "flex",
-        border: "1px solid black",
-      },
-    });
-    const cdivh = gdiv([], {
+  const ratiopackcount = data[0].ratiopacksize ?? 0;
+  const odiv = gdiv([], {
+    css: {
+      display: "flex",
+      border: "1px solid black",
+    },
+  });
+  const cdivh = gdiv([], {
+    css: {
+      display: "flex",
+      flexDirection: "column",
+      flex: "1 1 10%",
+      //border: "1px solid black",
+    },
+  });
+  //add headers
+  const spsizeh = gspan("Size:", [], {
+    borderBottom: "1px solid black",
+    textAlign: "center",
+    paddingTop: "3px",
+    paddingLeft: "3px",
+    paddingRight: "3px",
+  });
+  cdivh.appendChild(spsizeh);
+  const spqtyh = gspan("Qty:", [], {
+    textAlign: "center",
+    paddingTop: "3px",
+    paddingLeft: "3px",
+    paddingRight: "3px",
+  });
+  cdivh.appendChild(spqtyh);
+  odiv.appendChild(cdivh);
+
+  //rows
+  data.poDetailData.forEach((row) => {
+    const cdiv = gdiv([], {
       css: {
         display: "flex",
         flexDirection: "column",
-        flex: "1 1 10%",
+        // flex: "1 1 5%",
         //border: "1px solid black",
+        width: "30px",
       },
     });
-    //add headers
-    const spsizeh = gspan("Size:", [], {
+    const spsize = gspan(row.size, [], {
       borderBottom: "1px solid black",
       textAlign: "center",
+      borderLeft: "1px solid black",
       paddingTop: "3px",
-      paddingLeft: "3px",
-      paddingRight: "3px",
     });
-    cdivh.appendChild(spsizeh);
-    const spqtyh = gspan("Qty:", [], {
+    cdiv.appendChild(spsize);
+    const qty: any =
+      ratiopackcount * parseInt(row.ratiopack) + parseInt(row.single);
+    const spqty = gspan(qty, [], {
       textAlign: "center",
+      borderLeft: "1px solid black",
       paddingTop: "3px",
-      paddingLeft: "3px",
-      paddingRight: "3px",
     });
-    cdivh.appendChild(spqtyh);
-    odiv.appendChild(cdivh);
-  
-    //rows
-    data.poDetailData.forEach((row) => {
-      const cdiv = gdiv([], {
-        css: {
-          display: "flex",
-          flexDirection: "column",
-          // flex: "1 1 5%",
-          //border: "1px solid black",
-          width: "30px",
-        },
-      });
-      const spsize = gspan(row.size, [], {
-        borderBottom: "1px solid black",
-        textAlign: "center",
-        borderLeft: "1px solid black",
-        paddingTop: "3px",
-      });
-      cdiv.appendChild(spsize);
-      const qty:any =
-        ratiopackcount * parseInt(row.ratiopack) + parseInt(row.single);
-      const spqty = gspan(qty, [], {
-        textAlign: "center",
-        borderLeft: "1px solid black",
-        paddingTop: "3px",
-      });
-      cdiv.appendChild(spqty);
-      odiv.appendChild(cdiv);
-    });
-  
-    const d = gdiv();
-    d.appendChild(odiv);
-  
-    return d;
-  };
+    cdiv.appendChild(spqty);
+    odiv.appendChild(cdiv);
+  });
+
+  const d = gdiv();
+  d.appendChild(odiv);
+
+  return d;
+};
