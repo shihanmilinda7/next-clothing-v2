@@ -4,12 +4,14 @@ interface invoiceState {
   allPoDataList: any[];
   selectedPoDataList: any[];
   modifiedPoList: any[];
+  newSelectedPoList: any[];
 }
 
 const initialState: invoiceState = {
   allPoDataList: [],
   selectedPoDataList: [],
   modifiedPoList: [],
+  newSelectedPoList: [],
 };
 
 const invoiceSlice = createSlice({
@@ -25,10 +27,17 @@ const invoiceSlice = createSlice({
     setModifiedPoDataList: (state, action) => {
       state.modifiedPoList = action.payload;
     },
+    setNewSeletcedPoDataList: (state, action) => {
+      state.newSelectedPoList = action.payload;
+    },
   },
 });
 
-export const { setSelectedPoList, setAllPoDataList, setModifiedPoDataList } =
-  invoiceSlice.actions;
+export const {
+  setSelectedPoList,
+  setAllPoDataList,
+  setModifiedPoDataList,
+  setNewSeletcedPoDataList,
+} = invoiceSlice.actions;
 
 export default invoiceSlice.reducer;

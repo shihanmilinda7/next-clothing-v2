@@ -7,9 +7,12 @@ import { InvoiceDetailTableRow } from "./invoicedetails-tablerow";
 import { AiFillPlusCircle, AiOutlineUndo } from "react-icons/ai";
 import { setPoDetailTableData } from "@/store/purchaseorder/po-slice";
 import { Button, Tooltip } from "@nextui-org/react";
-import { setSelectedPoList } from "@/store/invoice/invoice-slice";
+import {
+  setNewSeletcedPoDataList,
+  setSelectedPoList,
+} from "@/store/invoice/invoice-slice";
 
-export const PoSelectTable = () => {
+export const PoSelectTable = ({ closePopup }: { closePopup: () => void }) => {
   let pathname: string = "";
 
   try {
@@ -40,22 +43,27 @@ export const PoSelectTable = () => {
   useEffect(() => {
     let q = [...allPoDataList];
 
-    for (let i = 0; i < q.length; i++) {
-      let element = q[i];
-      let tmpObj = selectedPoDataList.find(
-        (t) => t.purchaseorderid === element.purchaseorderid
-      );
-
-      if (tmpObj) {
-        // Create a new object with 'selected' property added
-        q[i] = { ...element, selected: true };
-      } else {
-        // Create a new object with 'selected' property added
-        q[i] = { ...element, selected: false };
-      }
-    }
     setTableData(q);
-  }, [selectedPoDataList]);
+  }, []);
+  // useEffect(() => {
+  //   let q = [...allPoDataList];
+
+  //   for (let i = 0; i < q.length; i++) {
+  //     let element = q[i];
+  //     let tmpObj = selectedPoDataList.find(
+  //       (t) => t.purchaseorderid === element.purchaseorderid
+  //     );
+
+  //     if (tmpObj) {
+  //       // Create a new object with 'selected' property added
+  //       q[i] = { ...element, selected: true };
+  //     } else {
+  //       // Create a new object with 'selected' property added
+  //       q[i] = { ...element, selected: false };
+  //     }
+  //   }
+  //   setTableData(q);
+  // }, [selectedPoDataList]);
 
   // useEffect(() => {
   //   const tmpArray = tableData.filter((t) => t.selected == true);
@@ -79,7 +87,10 @@ export const PoSelectTable = () => {
 
   const addEvent = () => {
     const tmpArray = tableData.filter((t) => t.selected == true);
-    dispatch(setSelectedPoList(tmpArray));
+
+    // dispatch(setSelectedPoList(tmpArray));
+    dispatch(setNewSeletcedPoDataList(tmpArray));
+    closePopup();
   };
 
   return (

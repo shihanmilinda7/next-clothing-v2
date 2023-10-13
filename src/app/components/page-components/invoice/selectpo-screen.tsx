@@ -62,6 +62,10 @@ const SelectPoScreen = () => {
     },
   };
 
+  const closePopup = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className="px-2">
       <Button
@@ -97,7 +101,7 @@ const SelectPoScreen = () => {
               {/* {JSON.stringify(allPoDetailsIn)} */}
               <div className="py-2 sm:w-1/1 w-full">
                 <div className="max-h-[450px] overflow-y-auto">
-                  <PoSelectTable />
+                  <PoSelectTable closePopup={closePopup}/>
                 </div>
               </div>
             </div>

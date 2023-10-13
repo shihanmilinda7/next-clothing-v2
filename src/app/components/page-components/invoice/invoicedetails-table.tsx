@@ -33,6 +33,9 @@ export const InvoiceDetailTable = ({
   const selectedPoDataList = useSelector(
     (state: any) => state.invoiceReducer.selectedPoDataList
   );
+  const newSelectedPoList = useSelector(
+    (state: any) => state.invoiceReducer.newSelectedPoList
+  );
 
   const dispatch = useDispatch();
 
@@ -41,17 +44,30 @@ export const InvoiceDetailTable = ({
 
   useEffect(() => {
     const q = [...selectedPoDataList];
-    const updatedTableData = q?.map((item) => ({
+
+    const updatedTableData = q?.map((item, index) => ({
       ...item,
       totalvalue: item.totalqty * item.sellingprice,
+      rowindex: index,
     }));
     setTableData(updatedTableData);
   }, [selectedPoDataList]);
 
   useEffect(() => {
-    const q = [...tableData];
+    const q = [...tableData, ...newSelectedPoList];
+
+    const updatedTableData = q?.map((item, index) => ({
+      ...item,
+      totalvalue: item.totalqty * item.sellingprice,
+      rowindex: index,
+    }));
+    setTableData(updatedTableData);
     dispatch(setSelectedPoList(q));
-  }, [tableUpdate]);
+  }, [newSelectedPoList]);
+
+  // useEffect(() => {
+  //   const q = [...tableData];
+  // }, [tableUpdate]);
 
   const [tableUpdate1, setTableUpdate1] = useState(false);
 
@@ -101,11 +117,12 @@ export const InvoiceDetailTable = ({
   // };
 
   const updateTableRows = (newVal: any) => {
-    const updatedArray = tableData.map((r) =>
+    const updatedArray = tableData.map((r, index) =>
       r.rowindex === newVal.rowindex ? newVal : r
     );
     setTableData(updatedArray);
-    setTableUpdate((prv: boolean) => !prv);
+    dispatch(setSelectedPoList(updatedArray));
+    // setTableUpdate((prv: boolean) => !prv);
   };
 
   return (

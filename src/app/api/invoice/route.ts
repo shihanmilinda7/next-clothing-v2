@@ -74,7 +74,7 @@ export async function POST(request: Request) {
             customerpo: element.customerpo,
             style: element.style,
             colour: element.colour,
-            totalqty: element.totalqty,
+            totalqty: parseInt(element.totalqty),
             sellingprice: parseFloat(element.sellingprice),
           },
         });
