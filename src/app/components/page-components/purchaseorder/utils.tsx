@@ -253,6 +253,7 @@ export const getSizeQtyTable = (data) => {
     paddingTop: "3px",
     paddingLeft: "3px",
     paddingRight: "3px",
+    margin: "1px",
   });
   cdivh.appendChild(spsizeh);
   const spqtyh = gspan("Qty:", [], {
@@ -272,6 +273,7 @@ export const getSizeQtyTable = (data) => {
         flexDirection: "column",
         // flex: "1 1 5%",
         //border: "1px solid black",
+        margin: "1px",
         width: "30px",
       },
     });
