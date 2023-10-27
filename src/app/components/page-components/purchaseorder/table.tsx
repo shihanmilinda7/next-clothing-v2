@@ -112,13 +112,24 @@ export const PoTable = ({ poRowObjects }: { poRowObjects: any[] }) => {
           </TableHeader>
           <TableBody>
             {poRowObjects?.map((tableRow: any, index: number) => (
-              <TableRow key={tableRow.fabricid} className="bg-purple-gray-300">
+              <TableRow
+                key={tableRow.purchaseorderid}
+                className="bg-purple-gray-300"
+              >
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{tableRow.customername ? tableRow.customername : "-"}</TableCell>
-                <TableCell>{tableRow.suppliername ? tableRow.suppliername : "-"}</TableCell>
-                <TableCell>{tableRow.orderstatus != "0" ? tableRow.orderstatus : "-" }</TableCell>
-                <TableCell>{tableRow.customerpo? tableRow.customerpo : "-"}</TableCell>
-                <TableCell>{tableRow.style? tableRow.style : "-"}</TableCell>
+                <TableCell>
+                  {tableRow.customername ? tableRow.customername : "-"}
+                </TableCell>
+                <TableCell>
+                  {tableRow.suppliername ? tableRow.suppliername : "-"}
+                </TableCell>
+                <TableCell>
+                  {tableRow.orderstatus != "0" ? tableRow.orderstatus : "-"}
+                </TableCell>
+                <TableCell>
+                  {tableRow.customerpo ? tableRow.customerpo : "-"}
+                </TableCell>
+                <TableCell>{tableRow.style ? tableRow.style : "-"}</TableCell>
                 <TableCell>
                   <div className="flex gap-1">
                     <Button
