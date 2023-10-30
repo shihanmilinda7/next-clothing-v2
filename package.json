@@ -20,7 +20,7 @@
     "bcryptjs": "^2.4.3",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
-    "exceljs": "^4.3.0",
+    "exceljs": "^4.4.0",
     "framer-motion": "^10.16.4",
     "html-pdf": "^3.0.1",
     "next": "13.4.19",
