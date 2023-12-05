@@ -81,7 +81,7 @@ const PoPrintableComponent = ({
 <div style=" display:flex; position:absolute;width:18.6px; height:14.4px; top:645.4px; left:172px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > DEPT:</div>
 <div style=" display:flex; position:absolute;width:93px; height:14.4px; top:645.4px; left:213.2px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.department}</div>
 <div style=" display:flex; position:absolute;width:93px; height:14.4px; top:665.4px; left:13px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Remark:</div>
-<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:680.4px; left:13px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.remark}</div>
+<div style=" display:flex; position:absolute;width:93px; top:680.4px; left:13px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.remark}</div>
 `);
     //   newWin.document.write(`
     //   <table style="position: absolute; bottom: 20px; border-collapse: collapse; width: 100%;">
