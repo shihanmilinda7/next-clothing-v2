@@ -29,42 +29,81 @@ const PoPrintableComponent = ({
 <div style=" display:flex; position:absolute;width:475.2px; height:14.4px; top:108px; left:13px;font-size:14px; font-weight:normal;justify-content:center; align-items:flex-end;border-top:2px solid black;  " >  </div>
 
 <div style=" display:flex; position:absolute;width:51px; height:14.4px; top:120px; left:13px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > PO#:</div>
-<div style=" display:flex; position:absolute;width:18.6px; height:14.4px; top:120px; left:64px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > ${poData.purchaseorderid}</div>
+<div style=" display:flex; position:absolute;width:18.6px; height:14.4px; top:120px; left:64px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > ${
+      poData.purchaseorderid
+    }</div>
 <div style=" display:flex; position:absolute;width:74.4px; height:14.4px; top:120px; left:283.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > PO Date:</div>
-<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:120px; left:376.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.date}</div>
+<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:120px; left:376.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.date
+    }</div>
 <div style=" display:flex; position:absolute;width:51px; height:14.4px; top:148.8px; left:13px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > Customer:</div>
-<div style=" display:flex; position:absolute;width:182.4px; height:14.4px; top:148.8px; left:82.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.customername}</div>
+<div style=" display:flex; position:absolute;width:182.4px; height:14.4px; top:148.8px; left:82.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.customername
+    }</div>
 <div style=" display:flex; position:absolute;width:93px; height:14.4px; top:148.8px; left:283.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Customer PO #:</div>
-<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:148.8px; left:376.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.customerpo}</div>
+<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:148.8px; left:376.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.customerpo
+    }</div>
 <div style=" display:flex; position:absolute;width:51px; height:14.4px; top:177.6px; left:13px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > Factory:</div>
-<div style=" display:flex; position:absolute;width:301px; height:14.4px; top:177.6px; left:82.6px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > ${poData.suppliername}</div>
-<div style=" display:flex; position:absolute;width:201px; height:57.6px; top:192px; left:82.6px;font-size:14px; font-weight:normal;line-height: 1rem;justify-content:flex-start; align-items:flex-start; " > ${poData.address?.replace(/\n/g, '<br />')}</div>
+<div style=" display:flex; position:absolute;width:301px; height:14.4px; top:177.6px; left:82.6px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > ${
+      poData.suppliername
+    }</div>
+<div style=" display:flex; position:absolute;width:201px; height:57.6px; top:192px; left:82.6px;font-size:14px; font-weight:normal;line-height: 1rem;justify-content:flex-start; align-items:flex-start; " > ${poData.address?.replace(
+      /\n/g,
+      "<br />"
+    )}</div>
 
 <div style=" display:flex; position:absolute;width:475.2px; height:14.4px; top:260.6px; left:13px;font-size:14px; font-weight:normal;justify-content:center; align-items:flex-end;border-bottom:2px solid black;  " >  </div>
 <div style=" display:flex; position:absolute;width:69.6px; height:14.4px; top:285.4px; left:13px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Style #:</div>
-<div style=" display:flex; position:absolute;width:182.4px; height:14.4px; top:285.4px; left:82.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.style}</div>
+<div style=" display:flex; position:absolute;width:182.4px; height:14.4px; top:285.4px; left:82.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.style
+    }</div>
 <div style=" display:flex; position:absolute;width:100px; height:14.4px; top:285.4px; left:273.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Customer Style#:</div>
-<div style=" display:flex; position:absolute;width:111.6px; height:14.4px; top:285.4px; left:376.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.customerstylename}</div>
+<div style=" display:flex; position:absolute;width:111.6px; height:14.4px; top:285.4px; left:376.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.customerstylename
+    }</div>
 <div style=" display:flex; position:absolute;width:69.6px; height:14.4px; top:307.2px; left:13px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Fabric:</div>
-<div style=" display:flex; position:absolute;width:182.4px; height:14.4px; top:307.2px; left:82.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.fabricname}</div>
+<div style=" display:flex; position:absolute;width:182.4px; height:14.4px; top:307.2px; left:82.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.fabricname
+    }</div>
 <div style=" display:flex; position:absolute;width:18.6px; height:14.4px; top:307.2px; left:273.6px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > Colour:</div>
-<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:307.2px; left:376.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.colour}</div>
+<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:307.2px; left:376.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.colour
+    }</div>
 <div style=" display:flex; position:absolute;width:69.6px; height:14.4px; top:336px; left:13px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Ex-Fty:</div>
-<div style=" display:flex; position:absolute;width:163.8px; height:14.4px; top:336px; left:82.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.exfactorydate}</div>
+<div style=" display:flex; position:absolute;width:163.8px; height:14.4px; top:336px; left:82.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.exfactorydate
+    }</div>
 <div style=" display:flex; position:absolute;width:74.4px; height:14.4px; top:336px; left:273.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Dept:</div>
-<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:336px; left:376.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.department}</div>
+<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:336px; left:376.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.department
+    }</div>
 <div style=" display:flex; position:absolute;width:69.6px; height:14.4px; top:364.8px; left:13px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Ship Mode:</div>
-<div style=" display:flex; position:absolute;width:163.8px; height:14.4px; top:364.8px; left:82.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.shippingmode}</div>
+<div style=" display:flex; position:absolute;width:163.8px; height:14.4px; top:364.8px; left:82.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.shippingmode
+    }</div>
 <div style=" display:flex; position:absolute;width:93px; height:14.4px; top:364.8px; left:273.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Ship Method:</div>
-<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:364.8px; left:376.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.shippingmethod}</div>
+<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:364.8px; left:376.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.shippingmethod
+    }</div>
 
 <div style=" display:flex; position:absolute;width:475.2px; height:14.4px; top:387.6px; left:13px;font-size:14px; font-weight:normal;justify-content:center; align-items:flex-end;border-bottom:2px solid black;  " >  </div>
-<div style=" display:flex; position:absolute;width:71px; height:14.4px; top:408px; left:13px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > Price ${poData.currency}: </div>
-<div style=" display:flex; position:absolute;width:44.4px; height:14.4px; top:408px; left:74px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.supplierprice}</div>
+<div style=" display:flex; position:absolute;width:71px; height:14.4px; top:408px; left:13px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > Price ${
+      poData.currency
+    }: </div>
+<div style=" display:flex; position:absolute;width:44.4px; height:14.4px; top:408px; left:74px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.supplierprice
+    }</div>
 <div style=" display:flex; position:absolute;width:65.8px; height:14.4px; top:408px; left:153.4px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Total Qty:</div>
-<div style=" display:flex; position:absolute;width:55.8px; height:14.4px; top:408px; left:213.2px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.totalqty}</div>
-<div style=" display:flex; position:absolute;width:103px; height:14.4px; top:408px; left:263.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Total Value ${poData.currency}:</div>
-<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:408px; left:383.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.totalvalue}</div>
+<div style=" display:flex; position:absolute;width:55.8px; height:14.4px; top:408px; left:213.2px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.totalqty
+    }</div>
+<div style=" display:flex; position:absolute;width:103px; height:14.4px; top:408px; left:263.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Total Value ${
+      poData.currency
+    }:</div>
+<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:408px; left:383.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.totalvalue
+    }</div>
 <div style=" display:flex; position:absolute;width:456.6px; height:28.8px; top:436.8px; left:13px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-start; " id="po-table1" ></div>
 
 <div style=" display:flex; position:absolute;width:475.2px; height:14.4px; top:476.6px; left:13px;font-size:14px; font-weight:normal;justify-content:center; align-items:flex-end;border-bottom:2px solid black;  " >  </div>
@@ -77,11 +116,18 @@ const PoPrintableComponent = ({
 
 
 <div style=" display:flex; position:absolute;width:79.6px; height:14.4px; top:645.4px; left:13px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Colour Code:</div>
-<div style=" display:flex; position:absolute;width:89.4px; height:14.4px; top:645.4px; left:93.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.colourcode}</div>
+<div style=" display:flex; position:absolute;width:89.4px; height:14.4px; top:645.4px; left:93.6px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.colourcode
+    }</div>
 <div style=" display:flex; position:absolute;width:18.6px; height:14.4px; top:645.4px; left:172px;font-size:14px; font-weight:normal;justify-content:left; align-items:flex-end; " > DEPT:</div>
-<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:645.4px; left:213.2px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.department}</div>
-<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:665.4px; left:13px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > Remark:</div>
-<div style=" display:flex; position:absolute;width:93px; top:680.4px; left:13px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${poData.remark}</div>
+<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:645.4px; left:213.2px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.department
+    }</div>
+<div style=" display:flex; position:absolute;width:475.2px; height:14.4px; top:650.6px; left:13px;font-size:14px; font-weight:normal;justify-content:center; align-items:flex-end;border-bottom:2px solid black;  " >  </div>
+<div style=" display:flex; position:absolute;width:93px; height:14.4px; top:672.4px; left:13px;font-size:16px; font-weight:bold;justify-content:flex-start; align-items:flex-end; " > Remark:</div>
+<div style=" display:flex; position:absolute;width:93px; top:690.4px; left:13px;font-size:14px; font-weight:normal;justify-content:flex-start; align-items:flex-end; " > ${
+      poData.remark
+    }</div>
 `);
     //   newWin.document.write(`
     //   <table style="position: absolute; bottom: 20px; border-collapse: collapse; width: 100%;">
